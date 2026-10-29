@@ -32,7 +32,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Short version: pull before you start, wo
 
 ## Team
 
-- Ori Rockwell
+- Orville Rockwell
 - Yi-Ting (Jerry)
 - Wenjun Chen
 - Yixin Tian
+
