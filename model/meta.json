@@ -1,0 +1,40 @@
+{
+ "seeds": 3,
+ "trained_through": "2026-10-19",
+ "weekly_cfg": {
+  "lr": 0.003,
+  "dropout": 0.4
+ },
+ "weekly_feats": [
+  "d_retail",
+  "d_gulf",
+  "d_nyh",
+  "d_brent",
+  "up_gulf",
+  "dn_gulf",
+  "ect",
+  "garch_sd"
+ ],
+ "weekly_lookback": 8,
+ "daily_feats": [
+  "d_aaa",
+  "d_aaa_l2",
+  "d_gulf",
+  "d_brent",
+  "ect",
+  "w_drift",
+  "garch_sd"
+ ],
+ "daily_lookback": 7,
+ "daily_train_end": "2026-10-19",
+ "weekly_epochs": [
+  74,
+  61,
+  55
+ ],
+ "daily_epochs": [
+  84,
+  68,
+  72
+ ]
+}
