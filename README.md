@@ -18,10 +18,12 @@ Team project: a GARCH-LSTM-t model for US retail gasoline prices (AAA daily and 
 
 | Path | What it is |
 |---|---|
-| `export_demo.py` | Runs the saved model on `data/` and writes `demo/forecast.json` (the only thing the front ends read) |
+| `export_demo.py` | Runs the saved model on `data/` and writes `docs/forecast.json` (the only thing the front ends read) |
 | `app.py` | Streamlit dashboard for the team: forecast, any-threshold probabilities, strike ladder, scorecard. `pip install -r requirements-app.txt`, then `streamlit run app.py` |
-| `demo/index.html` | Static web demo (no server needed). Reads `demo/forecast.json` |
-| `demo/scorecard.json` | Out-of-sample scores from Part 4. Update it when Part 4 is re-run |
+| `docs/index.html` | Static web demo (no server needed). Reads `docs/forecast.json` |
+| `docs/scorecard.json` | Out-of-sample scores from Part 4. Update it when Part 4 is re-run |
+
+The web demo is published with GitHub Pages from the `docs/` folder (Settings > Pages > Deploy from a branch > `main` / `docs`).
 
 To refresh after retraining or adding data: `python export_demo.py` (add `--out <folder>` to copy the JSON to a website folder).
 

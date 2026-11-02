@@ -1,6 +1,6 @@
-"""Export the model's latest forecast to JSON for the front ends (demo/index.html and app.py).
+"""Export the model's latest forecast to JSON for the front ends (docs/index.html and app.py).
 
-    python export_demo.py                 # writes demo/forecast.json
+    python export_demo.py                 # writes docs/forecast.json
     python export_demo.py --out some/dir  # also copies forecast.json + scorecard.json there
 
 Runs the saved model in model/ on the current data/ (no training). When the team retrains (python train_model.py or
@@ -13,7 +13,7 @@ import numpy as np, pandas as pd
 from scipy import stats
 
 ROOT = Path(__file__).resolve().parent
-DEMO = ROOT / "demo"
+DEMO = ROOT / "docs"
 
 
 def build():
@@ -58,7 +58,7 @@ def main():
     out = build()
     DEMO.mkdir(exist_ok=True)
     (DEMO / "forecast.json").write_text(json.dumps(out, indent=1))
-    print(f"wrote demo/forecast.json: forecast for {out['target_date']} = ${out['forecast']:.4f}, "
+    print(f"wrote docs/forecast.json: forecast for {out['target_date']} = ${out['forecast']:.4f}, "
           f"{len(out['ladder'])} strikes, data through {out['last_aaa_date']}")
     if a.out:
         d = Path(a.out); d.mkdir(parents=True, exist_ok=True)
