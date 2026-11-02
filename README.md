@@ -1,4 +1,4 @@
-﻿# AAI6640 Team 5 - Applied Deep Learning
+# AAI6640 Team 5 - Applied Deep Learning
 
 Team project: a GARCH-LSTM-t model for US retail gasoline prices (AAA daily and EIA weekly), scored against Kalshi gas-price markets.
 
@@ -13,6 +13,17 @@ Team project: a GARCH-LSTM-t model for US retail gasoline prices (AAA daily and 
 | `data/` | Input data: `fred.csv`, `kalshi_markets.csv`, `kalshi_open_book.csv` |
 | `model/` | Trained daily and weekly weights (3 seeds each), scalers and `meta.json` |
 | `results/` | Saved results from earlier parts (`.pkl`, `.json`) |
+
+## Front end (dashboard and web demo)
+
+| Path | What it is |
+|---|---|
+| `export_demo.py` | Runs the saved model on `data/` and writes `demo/forecast.json` (the only thing the front ends read) |
+| `app.py` | Streamlit dashboard for the team: forecast, any-threshold probabilities, strike ladder, scorecard. `pip install -r requirements-app.txt`, then `streamlit run app.py` |
+| `demo/index.html` | Static web demo (no server needed). Reads `demo/forecast.json` |
+| `demo/scorecard.json` | Out-of-sample scores from Part 4. Update it when Part 4 is re-run |
+
+To refresh after retraining or adding data: `python export_demo.py` (add `--out <folder>` to copy the JSON to a website folder).
 
 ## Setup
 
