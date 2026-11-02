@@ -1,0 +1,532 @@
+{
+ "generated_utc": "2026-11-02 08:58",
+ "model": "GARCH-LSTM-t (3-seed ensembles: weekly EIA retail model feeding a daily AAA model)",
+ "target_date": "2026-10-20",
+ "last_aaa_date": "2026-10-19",
+ "last_aaa": 4.2953,
+ "trained_through": "2026-10-19",
+ "wholesale_stale_days": 4,
+ "forecast": 4.287993136524778,
+ "change_cents": -0.7306863475221803,
+ "interval80": [
+  4.277262826647236,
+  4.298750365381755
+ ],
+ "interval95": [
+  4.267685861254667,
+  4.308397041547477
+ ],
+ "prob_up": 0.17508413219356422,
+ "prob_down": 0.8249158678064358,
+ "within_half_cent": 0.49382266228899585,
+ "dist": {
+  "mu_pct": -0.17025785148143768,
+  "scale_pct": 0.1565907746553421,
+  "df": 3.2856035232543945
+ },
+ "ladder": [
+  {
+   "strike": 4.255,
+   "model_p": 0.9936,
+   "market_last": 0.99,
+   "volume": 21437.74
+  },
+  {
+   "strike": 4.26,
+   "model_p": 0.9896,
+   "market_last": 0.99,
+   "volume": 3443.47
+  },
+  {
+   "strike": 4.265,
+   "model_p": 0.982,
+   "market_last": 0.99,
+   "volume": 3410.0
+  },
+  {
+   "strike": 4.27,
+   "model_p": 0.9661,
+   "market_last": 0.98,
+   "volume": 20246.36
+  },
+  {
+   "strike": 4.275,
+   "model_p": 0.93,
+   "market_last": 0.97,
+   "volume": 30744.82
+  },
+  {
+   "strike": 4.28,
+   "model_p": 0.8438,
+   "market_last": 0.27,
+   "volume": 28893.24
+  },
+  {
+   "strike": 4.285,
+   "model_p": 0.6583,
+   "market_last": 0.08,
+   "volume": 36457.62
+  },
+  {
+   "strike": 4.29,
+   "model_p": 0.3915,
+   "market_last": 0.04,
+   "volume": 37771.63
+  },
+  {
+   "strike": 4.295,
+   "model_p": 0.1838,
+   "market_last": 0.01,
+   "volume": 16984.12
+  },
+  {
+   "strike": 4.3,
+   "model_p": 0.082,
+   "market_last": 0.01,
+   "volume": 28167.32
+  },
+  {
+   "strike": 4.305,
+   "model_p": 0.0392,
+   "market_last": 0.01,
+   "volume": 7262.41
+  },
+  {
+   "strike": 4.31,
+   "model_p": 0.0205,
+   "market_last": 0.01,
+   "volume": 4391.76
+  },
+  {
+   "strike": 4.315,
+   "model_p": 0.0117,
+   "market_last": 0.01,
+   "volume": 1100.0
+  },
+  {
+   "strike": 4.32,
+   "model_p": 0.0072,
+   "market_last": 0.01,
+   "volume": 2559.0
+  },
+  {
+   "strike": 4.325,
+   "model_p": 0.0047,
+   "market_last": 0.01,
+   "volume": 2582.37
+  },
+  {
+   "strike": 4.33,
+   "model_p": 0.0032,
+   "market_last": 0.01,
+   "volume": 2100.0
+  },
+  {
+   "strike": 4.335,
+   "model_p": 0.0022,
+   "market_last": 0.01,
+   "volume": 2469.1
+  }
+ ],
+ "history": [
+  {
+   "date": "2026-07-22",
+   "aaa": 4.06
+  },
+  {
+   "date": "2026-07-23",
+   "aaa": 4.091
+  },
+  {
+   "date": "2026-07-24",
+   "aaa": 4.105
+  },
+  {
+   "date": "2026-07-25",
+   "aaa": 4.111
+  },
+  {
+   "date": "2026-07-26",
+   "aaa": 4.11
+  },
+  {
+   "date": "2026-07-27",
+   "aaa": 4.11
+  },
+  {
+   "date": "2026-07-28",
+   "aaa": 4.099
+  },
+  {
+   "date": "2026-07-29",
+   "aaa": 4.091
+  },
+  {
+   "date": "2026-07-30",
+   "aaa": 4.098
+  },
+  {
+   "date": "2026-07-31",
+   "aaa": 4.106
+  },
+  {
+   "date": "2026-08-01",
+   "aaa": 4.101
+  },
+  {
+   "date": "2026-08-02",
+   "aaa": 4.096
+  },
+  {
+   "date": "2026-08-03",
+   "aaa": 4.095
+  },
+  {
+   "date": "2026-08-04",
+   "aaa": 4.089
+  },
+  {
+   "date": "2026-08-05",
+   "aaa": 4.0801
+  },
+  {
+   "date": "2026-08-06",
+   "aaa": 4.0633
+  },
+  {
+   "date": "2026-08-07",
+   "aaa": 4.0422
+  },
+  {
+   "date": "2026-08-08",
+   "aaa": 4.0224
+  },
+  {
+   "date": "2026-08-09",
+   "aaa": 4.0121
+  },
+  {
+   "date": "2026-08-10",
+   "aaa": 4.0091
+  },
+  {
+   "date": "2026-08-11",
+   "aaa": 4.0116
+  },
+  {
+   "date": "2026-08-12",
+   "aaa": 4.036
+  },
+  {
+   "date": "2026-08-13",
+   "aaa": 4.0715
+  },
+  {
+   "date": "2026-08-14",
+   "aaa": 4.0776
+  },
+  {
+   "date": "2026-08-15",
+   "aaa": 4.0704
+  },
+  {
+   "date": "2026-08-16",
+   "aaa": 4.0656
+  },
+  {
+   "date": "2026-08-17",
+   "aaa": 4.0636
+  },
+  {
+   "date": "2026-08-18",
+   "aaa": 4.0654
+  },
+  {
+   "date": "2026-08-19",
+   "aaa": 4.086
+  },
+  {
+   "date": "2026-08-20",
+   "aaa": 4.1044
+  },
+  {
+   "date": "2026-08-21",
+   "aaa": 4.1092
+  },
+  {
+   "date": "2026-08-22",
+   "aaa": 4.1024
+  },
+  {
+   "date": "2026-08-23",
+   "aaa": 4.0986
+  },
+  {
+   "date": "2026-08-24",
+   "aaa": 4.0991
+  },
+  {
+   "date": "2026-08-25",
+   "aaa": 4.0969
+  },
+  {
+   "date": "2026-08-26",
+   "aaa": 4.1014
+  },
+  {
+   "date": "2026-08-27",
+   "aaa": 4.0997
+  },
+  {
+   "date": "2026-08-28",
+   "aaa": 4.0898
+  },
+  {
+   "date": "2026-08-29",
+   "aaa": 4.081
+  },
+  {
+   "date": "2026-08-30",
+   "aaa": 4.0787
+  },
+  {
+   "date": "2026-08-31",
+   "aaa": 4.0807
+  },
+  {
+   "date": "2026-09-01",
+   "aaa": 4.0954
+  },
+  {
+   "date": "2026-09-02",
+   "aaa": 4.1203
+  },
+  {
+   "date": "2026-09-03",
+   "aaa": 4.1436
+  },
+  {
+   "date": "2026-09-04",
+   "aaa": 4.1474
+  },
+  {
+   "date": "2026-09-05",
+   "aaa": 4.1459
+  },
+  {
+   "date": "2026-09-06",
+   "aaa": 4.1473
+  },
+  {
+   "date": "2026-09-07",
+   "aaa": 4.1505
+  },
+  {
+   "date": "2026-09-08",
+   "aaa": 4.1514
+  },
+  {
+   "date": "2026-09-09",
+   "aaa": 4.2245
+  },
+  {
+   "date": "2026-09-10",
+   "aaa": 4.277
+  },
+  {
+   "date": "2026-09-11",
+   "aaa": 4.295
+  },
+  {
+   "date": "2026-09-12",
+   "aaa": 4.3104
+  },
+  {
+   "date": "2026-09-13",
+   "aaa": 4.313
+  },
+  {
+   "date": "2026-09-14",
+   "aaa": 4.3163
+  },
+  {
+   "date": "2026-09-15",
+   "aaa": 4.3289
+  },
+  {
+   "date": "2026-09-16",
+   "aaa": 4.3672
+  },
+  {
+   "date": "2026-09-17",
+   "aaa": 4.4386
+  },
+  {
+   "date": "2026-09-18",
+   "aaa": 4.4687
+  },
+  {
+   "date": "2026-09-19",
+   "aaa": 4.4759
+  },
+  {
+   "date": "2026-09-20",
+   "aaa": 4.4761
+  },
+  {
+   "date": "2026-09-21",
+   "aaa": 4.4786
+  },
+  {
+   "date": "2026-09-22",
+   "aaa": 4.475
+  },
+  {
+   "date": "2026-09-23",
+   "aaa": 4.4744
+  },
+  {
+   "date": "2026-09-24",
+   "aaa": 4.4825
+  },
+  {
+   "date": "2026-09-25",
+   "aaa": 4.4918
+  },
+  {
+   "date": "2026-09-26",
+   "aaa": 4.4874
+  },
+  {
+   "date": "2026-09-27",
+   "aaa": 4.4798
+  },
+  {
+   "date": "2026-09-28",
+   "aaa": 4.4768
+  },
+  {
+   "date": "2026-09-29",
+   "aaa": 4.4558
+  },
+  {
+   "date": "2026-09-30",
+   "aaa": 4.4343
+  },
+  {
+   "date": "2026-10-01",
+   "aaa": 4.4137
+  },
+  {
+   "date": "2026-10-02",
+   "aaa": 4.3961
+  },
+  {
+   "date": "2026-10-03",
+   "aaa": 4.3807
+  },
+  {
+   "date": "2026-10-04",
+   "aaa": 4.3697
+  },
+  {
+   "date": "2026-10-05",
+   "aaa": 4.3653
+  },
+  {
+   "date": "2026-10-06",
+   "aaa": 4.3685
+  },
+  {
+   "date": "2026-10-07",
+   "aaa": 4.3667
+  },
+  {
+   "date": "2026-10-08",
+   "aaa": 4.3612
+  },
+  {
+   "date": "2026-10-09",
+   "aaa": 4.3718
+  },
+  {
+   "date": "2026-10-10",
+   "aaa": 4.3669
+  },
+  {
+   "date": "2026-10-11",
+   "aaa": 4.3585
+  },
+  {
+   "date": "2026-10-12",
+   "aaa": 4.3556
+  },
+  {
+   "date": "2026-10-13",
+   "aaa": 4.3413
+  },
+  {
+   "date": "2026-10-14",
+   "aaa": 4.3333
+  },
+  {
+   "date": "2026-10-15",
+   "aaa": 4.3344
+  },
+  {
+   "date": "2026-10-16",
+   "aaa": 4.3271
+  },
+  {
+   "date": "2026-10-17",
+   "aaa": 4.3085
+  },
+  {
+   "date": "2026-10-18",
+   "aaa": 4.2988
+  },
+  {
+   "date": "2026-10-19",
+   "aaa": 4.2953
+  }
+ ],
+ "scorecard": {
+  "source": "Part4_Diagnostics.ipynb, daily model out-of-sample on settled Kalshi AAA contracts (Aug 20 to Oct 19 2026; 1,105 contracts on 61 settlement days). Update this file when Part 4 is re-run.",
+  "window": "Aug 20 - Oct 19, 2026",
+  "contracts": 1105,
+  "events": 61,
+  "rows": [
+   {
+    "metric": "Accuracy (all strikes)",
+    "model": 0.886,
+    "market": 0.933,
+    "note": "market better, 95% CI on difference -7.8 to -2.0 points"
+   },
+   {
+    "metric": "Accuracy (strikes within 1 cent of last price)",
+    "model": 0.741,
+    "market": 0.85,
+    "note": "market better, CI -17.3 to -4.9 points"
+   },
+   {
+    "metric": "Brier score (lower is better)",
+    "model": 0.0854,
+    "market": 0.0489,
+    "note": "market better, CI of model minus market +0.016 to +0.063"
+   }
+  ],
+  "backtest": {
+   "rule": "buy at 9:00 a.m. when estimated edge after Kalshi fees exceeds 3 cents",
+   "model_only": {
+    "trades": 208,
+    "roi": -0.007
+   },
+   "model_plus_market": {
+    "trades": 86,
+    "roi": -0.043
+   }
+  },
+  "verdict": "The model is a usable probabilistic forecaster, but the Kalshi price was significantly more accurate over this window and the fee-aware backtest lost money. No tradable edge was found."
+ },
+ "repo": "https://github.com/OrvilleRockwellJr/aai6640-team5"
+}
