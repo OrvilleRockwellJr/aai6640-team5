@@ -126,7 +126,7 @@ footer a{color:#BFD5F7}
     <div style="--c:var(--auto)"><b>2. Daily model</b><p>A second LSTM uses the weekly forecast, recent AAA changes, wholesale and crude moves, and a GARCH volatility estimate to forecast tomorrow's change.</p></div>
     <div style="--c:var(--bio)"><b>3. Probabilities</b><p>The output is a Student-t distribution. Every threshold question, and every Kalshi strike, is read off its cumulative curve. Three seeds are averaged.</p></div>
   </div>
-  <p class="note">Built with Applied Deep Learning team 5 (Northeastern, AAI 6640). I lead the team and own the dataset and evaluation. <a id="repo" href="#" target="_blank" rel="noopener">Code and notebooks on GitHub</a>.</p>
+  <p class="note">Built by Applied Deep Learning team 5 (Northeastern, AAI 6640): Orville Rockwell Jr. (team lead), Yi-Ting Lin, Wenjun Chen and Yixin Tian. The scorecard comes from the team's Part 4 diagnostics.</p>
 </section>
 
 </main>
@@ -234,7 +234,7 @@ function init(D){
   t+='<tr><td>Fee-aware backtest return<br><span style="color:var(--faint);font-size:12.5px">'+b.rule+'</span></td><td class="bad">'+(100*b.model_only.roi).toFixed(1)+'% ('+b.model_only.trades+' trades)</td><td>–</td><td style="text-align:left;color:var(--muted)">blended with the market: '+(100*b.model_plus_market.roi).toFixed(1)+'% ('+b.model_plus_market.trades+' trades)</td></tr>';
   $("score").innerHTML=t;
   $("verdict").textContent=S.verdict;
-  $("repo").href=D.repo;
+  if($("repo"))$("repo").href=D.repo;
   $("gen").textContent="Snapshot generated "+D.generated_utc+" UTC";
 }
 })();
