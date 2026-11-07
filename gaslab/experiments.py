@@ -7,7 +7,7 @@ from scipy import stats
 from . import data as D, models as M, evaluate as E, pipeline as P
 
 SEEDS = range(3)
-VA = ("2026-07-01", "2026-08-19"); TE = ("2026-08-20", "2027-12-31")
+VA = ("2026-07-01", "2026-08-19"); TE = ("2026-08-20", "2026-10-19")   # fixed end: last settled Kalshi contract, so new AAA days do not change the test set
 WVA = ("2023-01-01", "2024-12-31"); WTE = ("2025-01-01", "2027-12-31")
 
 
