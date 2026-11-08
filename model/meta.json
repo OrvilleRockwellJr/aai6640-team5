@@ -1,6 +1,6 @@
 {
  "seeds": 3,
- "trained_through": "2026-10-19",
+ "trained_through": "2026-11-03",
  "weekly_cfg": {
   "lr": 0.003,
   "dropout": 0.4
@@ -26,15 +26,15 @@
   "garch_sd"
  ],
  "daily_lookback": 7,
- "daily_train_end": "2026-10-19",
+ "daily_train_end": "2026-11-03",
  "weekly_epochs": [
   74,
   61,
   55
  ],
  "daily_epochs": [
-  84,
-  68,
+  77,
+  152,
   72
  ]
 }
