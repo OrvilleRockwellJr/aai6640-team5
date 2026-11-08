@@ -17,3 +17,9 @@ The calibration was NOT tuned on these days. Stack coefficients are results/stac
 Files: `train_scratch.py` (retrain with fresh FRED rows), `calibrate.py` (fit scale/bias), `backtest.py`
 (score Nov 4-7), `kalshi_nov_book.csv` (settled strikes + 1h-after-open bid/ask), `fred_fresh/` (FRED pulls through Nov 3).
 The scripts expect a scratch copy of data/ at /home/claude/scratch/data with the fresh FRED rows appended to fred.csv.
+
+## Update (2026-11-08 evening)
+The fresh FRED rows (Oct 15 - Nov 3) are now in `data/fred.csv` (gaslab VERSION 2026-11-08), Parts 2-4 were rerun, and
+`model/` was retrained on them. Rescoring the repo's own model on Nov 4-7 reproduces the "fresh wholesale" rows above
+exactly (Brier 0.0653 uncalibrated, 0.0600 with the scale/bias calibration, stack 0.0290 / 0.0280). The calibration
+is not applied inside the pipeline; it is only in `backtest.py`.
