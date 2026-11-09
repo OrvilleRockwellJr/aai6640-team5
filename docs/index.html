@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GasLab: ask a model about U.S. gas prices</title>
+<title>Gas Price Forecast: ask the model</title>
 <meta name="description" content="A forecasting model for the U.S. average gas price. Ask about a day or a price, or use the calendar to see past forecasts and predictions with confidence.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232E6F68'/%3E%3Cpath d='M14 44 26 30l9 8 15-18' fill='none' stroke='white' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
@@ -11,21 +11,13 @@
 --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--serif:ui-serif,Georgia,"Times New Roman",serif}
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;cursor:pointer}
 a{color:var(--acc)}
-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;border-bottom:1px solid var(--line);background:var(--bg)}
-.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;letter-spacing:-.01em}
-.logo{width:28px;height:28px;border-radius:8px;background:var(--acc);display:grid;place-items:center}
-.logo svg{width:18px;height:18px}
-.hr{display:flex;align-items:center;gap:10px}
 .pill{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--mut);border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:4px 11px}
 .pill i{width:8px;height:8px;border-radius:50%;background:#3BA776;display:inline-block}
 .pill.stale i{background:#E0A030}
 .ibtn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:5px 11px;font-size:13.5px;color:var(--ink)}
 .ibtn:hover{background:#F2F0E7}
-main{flex:1;overflow-y:auto;scroll-behavior:smooth}
-.thread{max-width:46rem;margin:0 auto;padding:28px 18px 24px;display:flex;flex-direction:column;gap:22px}
 .msg{display:flex;gap:12px;align-items:flex-start}
 .av{flex:none;width:28px;height:28px;border-radius:8px;background:var(--acc);display:grid;place-items:center;margin-top:2px}
 .av svg{width:17px;height:17px}
@@ -80,39 +72,96 @@ svg text{font-family:var(--sans);font-size:11px;fill:var(--mut)}
 .dots span{display:inline-block;width:6px;height:6px;margin-right:4px;border-radius:50%;background:var(--faint);animation:b 1s infinite}
 .dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
 @keyframes b{0%,60%,100%{opacity:.3}30%{opacity:1}}
-footer{border-top:1px solid var(--line);background:var(--bg);padding:12px 18px 14px}
-.comp{max-width:46rem;margin:0 auto}
 form{display:flex;gap:8px;align-items:center;background:var(--panel);border:1px solid #D9D5C6;border-radius:16px;padding:8px 8px 8px 16px;box-shadow:0 2px 8px rgba(40,35,20,.06)}
 form:focus-within{border-color:var(--acc)}
 input[type=text]{flex:1;border:0;outline:0;font:inherit;font-size:16px;background:transparent;min-width:0;color:var(--ink)}
 form button{border:0;background:var(--acc);color:#fff;border-radius:10px;width:38px;height:36px;display:grid;place-items:center}
 form button:disabled{opacity:.4}
-.fine{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
 dialog{border:1px solid var(--line);border-radius:14px;max-width:34rem;padding:22px;font-size:15px;line-height:1.55}
 dialog::backdrop{background:rgba(30,28,20,.35)}
 dialog h3{margin:0 0 8px}
-@media (max-width:560px){.row{grid-template-columns:1fr 1fr}.big{font-size:2.1rem}.wk{grid-template-columns:4.4rem 1fr 3.8rem 0}.wk .c{display:none}.cal .d{min-height:46px;padding:3px 4px}.cal .d .e{font-size:10.5px}.txt{font-size:16.5px}}
+@media (max-width:560px){.row{grid-template-columns:1fr 1fr}.big{font-size:2.1rem}.wk{grid-template-columns:3.9rem 1fr 3.4rem 2.6rem;gap:8px 6px;font-size:13px}.cal .d{min-height:46px;padding:3px 4px}.cal .d .e{font-size:10.5px}.txt{font-size:16.5px}}
+
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow:hidden}
+.app{display:grid;grid-template-columns:260px minmax(0,1fr) 370px;height:100vh;height:100dvh}
+.side{border-right:1px solid var(--line);background:#F4F2EA;padding:16px 14px;display:flex;flex-direction:column;gap:6px;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px;letter-spacing:-.01em;padding:2px 4px 10px}
+.logo{width:28px;height:28px;border-radius:8px;background:var(--acc);display:grid;place-items:center;flex:none}
+.logo svg{width:18px;height:18px}
+.newchat{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:9px 12px;font-weight:500;margin-bottom:10px}
+.newchat:hover{background:#fff;border-color:#CFCBB9}
+.side h5,.cpanel h5{margin:0 0 6px;font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.tools{display:flex;flex-direction:column;gap:2px}
+.tools button{border:0;background:transparent;text-align:left;padding:8px 10px;border-radius:8px;font-size:15px}
+.tools button:hover{background:#EAE7DB}
+.grow{flex:1}
+.model p{font-size:12.5px;color:var(--mut);margin:8px 2px 4px;line-height:1.45}
+.link{border:0;background:none;color:var(--acc);padding:2px;font-size:13.5px;text-decoration:underline;text-underline-offset:3px}
+.chat{display:flex;flex-direction:column;min-width:0;height:100%;position:relative}
+.topbar{display:none;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--line)}
+.topbar .brand{padding:0}
+main{flex:1;overflow-y:auto;scroll-behavior:smooth;display:none}
+.thread{max-width:44rem;margin:0 auto;padding:26px 18px 18px;display:flex;flex-direction:column;gap:22px}
+.hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;padding:0 24px 22px}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(1.7rem,3.2vw,2.4rem);letter-spacing:-.015em;margin:0 0 8px;line-height:1.2}
+.hero p{margin:0;color:var(--mut)}
+.comp{width:100%;max-width:46rem;margin:0 auto;padding:0 18px 12px}
+.below{min-height:0}
+.below .chips{justify-content:center;margin-top:16px}
+.fine{text-align:center;font-size:12px;color:var(--faint);margin:10px 0 0}
+body:not(.has) .below{flex:1}
+body:not(.has) .chat{justify-content:center}
+body:not(.has) .comp{flex:1;display:flex;flex-direction:column;justify-content:flex-start;max-width:46rem}
+body:not(.has) .fine{margin-top:auto}
+body.has .hero,body.has .below{display:none}
+body.has main{display:block}
+body.has .comp{flex:none;border-top:0;padding-bottom:12px}
+.cpanel{border-left:1px solid var(--line);background:var(--bg);padding:18px 16px;overflow-y:auto}
+.cpanel .legend{margin-top:12px}
+@media (max-width:1100px){.app{grid-template-columns:minmax(0,1fr)}.side,.cpanel{display:none}.topbar{display:flex}}
+@media (max-width:560px){.hero h1{font-size:1.5rem}}
 </style>
 </head>
 <body>
-<header>
-  <div class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-9"/></svg></span>GasLab</div>
-  <div class="hr"><span class="pill" id="status"><i></i><span>Loading&hellip;</span></span><button class="ibtn" id="about" type="button">About</button></div>
-</header>
-<main id="main"><div class="thread" id="thread"></div></main>
-<footer>
-  <div class="comp">
-    <form id="form" autocomplete="off">
-      <input type="text" id="q" placeholder="Ask about a day or a price, e.g. &ldquo;Will it be above $4.00 on Friday?&rdquo;" aria-label="Ask GasLab">
-      <button type="submit" id="send" aria-label="Send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
-    </form>
-    <p class="fine">A forecasting model, not a chatbot: it understands dates and prices. Not financial advice.</p>
-  </div>
-</footer>
-<dialog id="dlg"><h3>About GasLab</h3>
-<p>GasLab forecasts the AAA national average price for regular gasoline. It is a GARCH&ndash;LSTM network that outputs a probability distribution for the next day, built by Applied Deep Learning team 5 (AAI 6640, Northeastern University).</p>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-9"/></svg></span>Gas Price Forecast</div>
+    <button class="newchat" id="newchat" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>New chat</button>
+    <nav class="tools" aria-label="Tools">
+      <h5>Tools</h5>
+      <button type="button" data-q="Open calendar">Calendar</button>
+      <button type="button" data-q="Next 7 days">Next 7 days</button>
+      <button type="button" data-q="How accurate are you?">Track record</button>
+      <button type="button" data-q="Add a data point">Add a data point</button>
+    </nav>
+    <div class="grow"></div>
+    <div class="model">
+      <h5>Model</h5>
+      <span class="pill" id="status"><i></i><span>Loading&hellip;</span></span>
+      <p id="upd"></p>
+      <button class="link" id="about" type="button">About this model</button>
+    </div>
+  </aside>
+  <section class="chat" id="chat">
+    <div class="topbar"><div class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-9"/></svg></span>Gas Price Forecast</div><div><button class="ibtn" data-q="Open calendar" type="button">Calendar</button> <button class="ibtn" id="newchat2" type="button">New</button></div></div>
+    <div class="hero" id="hero"><h1>What do you want to know about gas prices?</h1><p>Ask about a day or a price, or tap a date on the calendar.</p></div>
+    <main id="main"><div class="thread" id="thread"></div></main>
+    <div class="comp" id="comp">
+      <form id="form" autocomplete="off">
+        <input type="text" id="q" placeholder="Ask about a day or a price, e.g. &ldquo;Will it be above $4.00 on Friday?&rdquo;" aria-label="Ask the model">
+        <button type="submit" id="send" aria-label="Send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+      </form>
+      <div class="below" id="below"><div class="chips" id="starters"></div></div>
+      <p class="fine">A forecasting model, not a chatbot: it understands dates and prices. Not financial advice.</p>
+    </div>
+  </section>
+  <aside class="cpanel" aria-label="Calendar"><h5>Calendar</h5><div id="sidecal"></div></aside>
+</div>
+<dialog id="dlg"><h3>About this model</h3>
+<p>Forecasts the AAA national average price for regular gasoline. It is a GARCH&ndash;LSTM network that outputs a probability distribution for the next day, built by Applied Deep Learning team 5 (AAI 6640, Northeastern University).</p>
 <p>It predicts one day at a time. For later days it carries the drift forward with a fade and widens the range at the rate measured on held-out days, so confidence drops the further out you ask. Every past day in the calendar was forecast before its price was known.</p>
-<p><a href="https://github.com/OrvilleRockwellJr/aai6640-team5" target="_blank" rel="noopener">Source code</a> &middot; <span id="upd"></span></p>
+<p><a href="https://github.com/OrvilleRockwellJr/aai6640-team5" target="_blank" rel="noopener">Source code</a></p>
 <form method="dialog" style="all:unset"><div class="acts"><button>Close</button></div></form></dialog>
 
 <script>
@@ -159,10 +208,10 @@ function botMsg(html,chips,delay){
 }
 function chipsHtml(list){return '<div class="chips">'+list.map(function(c){return '<button type="button" class="chip" data-q="'+esc(c)+'">'+esc(c)+'</button>'}).join("")+'</div>'}
 function wire(root){
-  root.querySelectorAll(".chip").forEach(function(b){b.onclick=function(){ask(b.getAttribute("data-q"))}});
+  root.querySelectorAll(".chip,[data-q]").forEach(function(b){b.onclick=function(){ask(b.getAttribute("data-q"))}});
   root.querySelectorAll("[data-cal]").forEach(function(el){calendar(el)});
 }
-function ask(t){t=t.trim();if(!t)return;userMsg(t);answer(t)}
+function ask(t){t=t.trim();if(!t)return;document.body.classList.add("has");userMsg(t);answer(t)}
 
 /* ---------- cards ---------- */
 function bell(c,sd,a,b,marks){
@@ -303,7 +352,7 @@ function answer(raw){
   if(/\b(help|what can you|how do (i|you)|what do you)\b/.test(t))return botMsg(helpHtml(),chips);
   if(/\b(accura|how good|track record|score|reliable|trust)/.test(t))return botMsg(accuracyCard(),["Open calendar","Next 7 days"]);
   if(/\b(add|submit|missing|update|refresh|retrain|new data)\b/.test(t)&&!ds&&!k)return botMsg(addCard(),["Open calendar","Tomorrow’s price"]);
-  if(/\bcalendar\b|\bpast forecasts?\b|\bhistory\b/.test(t))return botMsg(calCard(),["Next 7 days","How accurate are you?"]);
+  if(/\bcalendar\b|\bpast forecasts?\b|\bhistory\b/.test(t))return botMsg(window.innerWidth>1100?'<div class="txt"><p>The calendar is open on the right. Tap any day: colored days show how far off a past forecast was, dashed days show a prediction with its confidence.</p></div>':calCard(),["Next 7 days","How accurate are you?"]);
   if(/\bnext (7|seven) days\b|\bnext week\b|\bthis week\b|\bweek ahead\b|\bforecast for the week\b/.test(t)&&!k)return botMsg(weekCard(),["Open calendar","How accurate are you?"]);
   if(!ds&&k==null&&/\b(price|forecast|predict|cost|gas|going)\b/.test(t))ds=iso(lastD+1);
   if(ds==null&&k!=null)ds=iso(lastD+1);
@@ -326,11 +375,15 @@ function start(){
   var stale=todayN-lastD>2;
   $("status").className="pill"+(stale?" stale":"");
   $("status").lastChild.textContent=stale?"Data through "+nice(F.last_aaa_date):"Live · data through "+nice(F.last_aaa_date);
-  var up=(H.meta&&H.meta.updated_utc)||F.generated_utc;$("upd").textContent="Last refreshed "+up+" UTC. Model trained through "+F.trained_through+".";
+  var up=(H.meta&&H.meta.updated_utc)||F.generated_utc;$("upd").textContent="Refreshed "+up+" UTC. Trained through "+F.trained_through+".";
   $("about").onclick=function(){$("dlg").showModal()};
   var q1=future(1);
-  var hello='<div class="txt"><p>Hi, I’m GasLab. I forecast the U.S. average gas price as a probability, not a single number.</p><p>My forecast for <b>'+nice(iso(lastD+1))+'</b> is <b>'+usd(q1.pred)+'</b> ('+Math.round(q1.within1*100)+'% likely to land within a cent). Ask me about a day or a price, or tap a button.</p></div>';
-  botMsg(hello,["Tomorrow’s price","Next 7 days","Open calendar","Will it be above "+usd(Math.round(q1.pred*20)/20,2)+" tomorrow?","How accurate are you?","Add a data point"],200);
+  var starters=["What\u2019s the price tomorrow?","Next 7 days","Will it be above "+usd(Math.round(future(1).pred*20)/20,2)+" tomorrow?","How accurate are you?"];
+  $("starters").innerHTML=starters.map(function(c){return '<button type="button" class="chip" data-q="'+esc(c)+'">'+esc(c)+'</button>'}).join("");
+  wire(document.body);
+  calendar($("sidecal"));
+  function reset(){thread.innerHTML="";document.body.classList.remove("has");$("q").focus()}
+  $("newchat").onclick=reset;$("newchat2").onclick=reset;
   $("form").onsubmit=function(e){e.preventDefault();var v=$("q").value;$("q").value="";ask(v)};
   $("q").focus();
 }
