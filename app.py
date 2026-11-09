@@ -1,4 +1,4 @@
-"""GasLab dashboard (for the team's own use).
+"""Juroom dashboard (for the team's own use).
 
     pip install streamlit
     streamlit run app.py
@@ -12,7 +12,7 @@ import numpy as np, pandas as pd, streamlit as st
 from scipy import stats
 from pathlib import Path
 
-st.set_page_config(page_title="GasLab", page_icon="⛽", layout="wide")
+st.set_page_config(page_title="Juroom", page_icon="⛽", layout="wide")
 ROOT = Path(__file__).resolve().parent
 
 
@@ -22,7 +22,7 @@ def run(_token=0):
     return export_demo.build()
 
 
-st.title("GasLab: tomorrow's U.S. gas price")
+st.title("Juroom: tomorrow's U.S. gas price")
 st.caption("GARCH-LSTM-t forecast of the AAA national average, scored against Kalshi contracts. Research tool, not financial advice.")
 if st.sidebar.button("Re-run model"):
     run.clear()

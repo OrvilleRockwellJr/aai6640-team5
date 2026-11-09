@@ -1,4 +1,4 @@
-"""Daily refresh for the GasLab demo. Run by .github/workflows/daily-update.yml, or by hand:
+"""Daily refresh for the Juroom app. Run by .github/workflows/daily-update.yml, or by hand:
 
     python tools/update_daily.py            # fetch data, grade yesterday, forecast tomorrow, rewrite docs/*.json
     python tools/update_daily.py --offline  # skip the downloads (re-grade and re-forecast from data/ as it is)

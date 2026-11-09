@@ -55,7 +55,7 @@ jobs:
           git config user.name "gaslab-bot"; git config user.email "gaslab-bot@users.noreply.github.com"
           if [ "$MSG" = "ok" ]; then
             git add data && git commit -qm "Add data point from issue #$NUM" && git pull --rebase -q && git push
-            gh issue comment "$NUM" --body "Added. The next daily update (or a manual run of the Daily GasLab update workflow) will use it."
+            gh issue comment "$NUM" --body "Added. The next daily update (or a manual run of the Daily Juroom update workflow) will use it."
           else
             gh issue comment "$NUM" --body "Not added: $MSG"
           fi
