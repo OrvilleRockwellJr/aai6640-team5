@@ -62,3 +62,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Short version: pull before you start, wo
 - Wenjun Chen
 - Yixin Tian
 
+
+
+## Juroom: model pinning and data refresh
+The app (docs/) is named Juroom ("five" in Wolof, for Team 5). It runs the midterm-project model in `model/` (trained through 2026-11-03) and stays on it until the final version is added; the weekly retrain workflow is manual-only. The daily workflow refreshes AAA, FRED and Kalshi data (`tools/update_daily.py`), grades yesterday's forecast and freezes tomorrow's. Chats are saved in the visitor's browser (localStorage).
