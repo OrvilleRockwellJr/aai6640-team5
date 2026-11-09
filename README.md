@@ -15,6 +15,30 @@ Team project: a GARCH-LSTM-t model for US retail gasoline prices (AAA daily and 
 | `model/` | Trained daily and weekly weights (3 seeds each), scalers and `meta.json` |
 | `results/` | Saved results from earlier parts (`.pkl`, `.json`) |
 
+## Front end (web demo, calendar and dashboard)
+
+| Path | What it is |
+|---|---|
+| `docs/index.html` | Static web demo: tomorrow's forecast, any-threshold probabilities, a calendar of past forecasts vs actual prices, strike ladder, scorecard |
+| `docs/forecast.json` | Tomorrow's forecast (written by `export_demo.py` / `tools/update_daily.py`) |
+| `docs/history.json` | One row per past day: predicted price, 80%/95% range, actual price. Held-out and out-of-sample days only, plus live forecasts that are locked in before their price is published |
+| `docs/scorecard.json` | Out-of-sample scores from Part 4. Update it when Part 4 is re-run |
+| `app.py` | Streamlit dashboard for the team (`pip install -r requirements-app.txt`, then `streamlit run app.py`) |
+| `tools/build_history.py` | Rebuilds the held-out and out-of-sample rows of `history.json` (retrains small daily/weekly ensembles, a few minutes) |
+| `tools/update_daily.py` | Fetches FRED + AAA data, scores yesterday, locks in tomorrow's forecast, rewrites `docs/*.json` |
+
+Publish: Settings > Pages > Deploy from a branch > `main` / `docs`.
+
+### Automatic updates (GitHub Actions)
+
+| Workflow | When | What |
+|---|---|---|
+| `daily-update.yml` | every morning, plus manual run | `tools/update_daily.py`, then commits `data/` and `docs/` |
+| `weekly-retrain.yml` | Sundays, plus manual run | refits the model on all data (`gaslab.service.train()`), then refreshes the demo. Disable it to freeze the model |
+| `add-data.yml` | when an "Add a gas price data point" issue is opened | appends the row to `data/manual_aaa.csv` if the author is a project member; otherwise leaves it for review |
+
+The demo's "Add a data point" button opens that issue form. Notebooks read `data/`, so rerunning them after an automatic update gives slightly different numbers than a submitted run; pin a commit when you need fixed results.
+
 ## Setup
 
 Use Python 3.12 (TensorFlow has no wheels for newer versions).
