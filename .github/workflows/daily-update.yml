@@ -1,4 +1,4 @@
-name: Daily GasLab update
+name: Daily Juroom update
 # Fetches new FRED + AAA data, grades yesterday's forecast, freezes tomorrow's, and republishes the demo data.
 on:
   schedule:

@@ -1,8 +1,7 @@
-name: Weekly GasLab retrain
-# Refits the weekly + daily ensembles on everything in data/ and republishes. Disable this workflow to freeze the model.
+name: Retrain model (manual only)
+# The app is pinned to the midterm model until the final version is added, so this no longer runs on a schedule.
+# Run it by hand (Actions tab, Run workflow) when the team ships the final model.
 on:
-  schedule:
-    - cron: "30 14 * * 0"   # Sundays, about 9:30 a.m. ET
   workflow_dispatch:
 concurrency:
   group: gaslab-data

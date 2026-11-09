@@ -1,4 +1,4 @@
-"""Daily refresh for the GasLab demo. Run by .github/workflows/daily-update.yml, or by hand:
+"""Daily refresh for the Juroom app. Run by .github/workflows/daily-update.yml, or by hand:
 
     python tools/update_daily.py            # fetch data, grade yesterday, forecast tomorrow, rewrite docs/*.json
     python tools/update_daily.py --offline  # skip the downloads (re-grade and re-forecast from data/ as it is)
@@ -13,7 +13,7 @@ What it does, in order
   5. Rewrites docs/forecast.json for the demo page.
 A failed download is reported and skipped; the run still produces a forecast from the data it has.
 """
-import argparse, io, json, re, sys, urllib.request
+import argparse, io, json, re, sys, urllib.error, urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -88,6 +88,43 @@ def update_aaa():
     print(f"  AAA: {today.date()} = ${today_px:.4f}, yesterday ${yday_px:.4f}; {len(add)} new row(s)")
 
 
+def update_kalshi(days_back=10):
+    """Pull recent KXAAAGASD contracts (public market-data API, no key) and merge them into data/kalshi_markets.csv by ticker."""
+    import json as _j, time
+    path = DATA / "kalshi_markets.csv"
+    cur = pd.read_csv(path)
+    since = int(time.time()) - days_back * 86400
+    rows, cursor = [], ""
+    try:
+        for _ in range(40):
+            url = ("https://api.elections.kalshi.com/trade-api/v2/markets?series_ticker=KXAAAGASD&limit=1000"
+                   f"&min_close_ts={since}" + (f"&cursor={cursor}" if cursor else ""))
+            for wait in (0, 5, 15, 30):          # the public API rate-limits shared IPs; back off on 429
+                time.sleep(wait)
+                try: j = _j.loads(get(url)); break
+                except urllib.error.HTTPError as e:
+                    if e.code != 429: raise
+            else: raise RuntimeError("rate limited")
+            rows += j.get("markets", []); cursor = j.get("cursor") or ""
+            if not cursor: break
+    except Exception as e:
+        print(f"  Kalshi: skipped ({type(e).__name__}: {e})"); return
+    st = {"finalized": "finalized", "settled": "finalized"}
+    new = pd.DataFrame([dict(
+        series="KXAAAGASD", event=m["event_ticker"], ticker=m["ticker"], strike=m.get("floor_strike"),
+        strike_type=m.get("strike_type"), cap=m.get("cap_strike"), result=m.get("result") or "",
+        value=m.get("expiration_value") or "", open_time=m.get("open_time"), close_time=m.get("close_time"),
+        exp=m.get("expected_expiration_time") or m.get("expiration_time"),
+        status=st.get(m.get("status"), m.get("status")), last=m.get("last_price_dollars"),
+        vol=m.get("volume_fp")) for m in rows])
+    if new.empty:
+        print("  Kalshi: no contracts returned"); return
+    before = len(cur)
+    cur = pd.concat([cur[~cur.ticker.isin(new.ticker)], new[cur.columns]], ignore_index=True)
+    cur.to_csv(path, index=False)
+    print(f"  Kalshi: {len(new)} contracts refreshed, {len(cur) - before} new")
+
+
 def update_history(fc):
     from gaslab import data as D
     h = json.load(open(HISTORY)) if HISTORY.exists() else {"meta": {}, "days": []}
@@ -111,7 +148,7 @@ def update_history(fc):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("--offline", action="store_true"); a = ap.parse_args()
     if not a.offline:
-        print("Fetching data"); update_fred(); update_aaa()
+        print("Fetching data"); update_fred(); update_aaa(); update_kalshi()
     from gaslab import service
     import export_demo
     fc = service.forecast(verbose=False)

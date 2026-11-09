@@ -1,4 +1,4 @@
-"""Build docs/history.json: the day-by-day record behind the GasLab calendar.
+"""Build docs/history.json: the day-by-day record behind the Juroom calendar.
 
 Every row is a forecast made BEFORE its actual price was known, so the calendar never shows a model grading
 its own training data:

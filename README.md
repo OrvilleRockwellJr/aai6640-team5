@@ -34,7 +34,7 @@ Publish: Settings > Pages > Deploy from a branch > `main` / `docs`.
 | Workflow | When | What |
 |---|---|---|
 | `daily-update.yml` | every morning, plus manual run | `tools/update_daily.py`, then commits `data/` and `docs/` |
-| `weekly-retrain.yml` | Sundays, plus manual run | refits the model on all data (`gaslab.service.train()`), then refreshes the demo. Disable it to freeze the model |
+| `weekly-retrain.yml` | Manual run only (the model is pinned to the midterm version) | refits the model on all data (`gaslab.service.train()`), then refreshes the demo. |
 | `add-data.yml` | when an "Add a gas price data point" issue is opened | appends the row to `data/manual_aaa.csv` if the author is a project member; otherwise leaves it for review |
 
 The demo's "Add a data point" button opens that issue form. Notebooks read `data/`, so rerunning them after an automatic update gives slightly different numbers than a submitted run; pin a commit when you need fixed results.
@@ -62,3 +62,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Short version: pull before you start, wo
 - Wenjun Chen
 - Yixin Tian
 
+
+
+## Juroom: model pinning and data refresh
+The app (docs/) is named Juroom ("five" in Wolof, for Team 5). It runs the midterm-project model in `model/` (trained through 2026-11-03) and stays on it until the final version is added; the weekly retrain workflow is manual-only. The daily workflow refreshes AAA, FRED and Kalshi data (`tools/update_daily.py`), grades yesterday's forecast and freezes tomorrow's. Chats are saved in the visitor's browser (localStorage).
