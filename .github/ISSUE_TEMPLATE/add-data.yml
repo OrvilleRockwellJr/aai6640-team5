@@ -1,0 +1,21 @@
+name: Add a gas price data point
+description: Submit an AAA national average price for a day the daily update missed. Collaborators' entries are added automatically.
+title: "Add data: "
+labels: ["add-data"]
+body:
+  - type: input
+    id: date
+    attributes:
+      label: Date
+      description: The day the price applies to, as YYYY-MM-DD.
+      placeholder: "2026-11-09"
+    validations:
+      required: true
+  - type: input
+    id: price
+    attributes:
+      label: AAA national average, regular ($/gal)
+      description: Number only, three or four decimals, from gasprices.aaa.com.
+      placeholder: "4.0203"
+    validations:
+      required: true

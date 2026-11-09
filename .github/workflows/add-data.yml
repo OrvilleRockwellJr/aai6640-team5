@@ -1,0 +1,62 @@
+name: Add data from issue
+# Turns an "Add a gas price data point" issue into a row in data/manual_aaa.csv.
+# Only repo owners, members and collaborators are applied automatically; anyone else's issue is left for review.
+on:
+  issues:
+    types: [opened]
+concurrency:
+  group: gaslab-data
+  cancel-in-progress: false
+permissions:
+  contents: write
+  issues: write
+jobs:
+  add:
+    if: contains(github.event.issue.labels.*.name, 'add-data') && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse and append
+        id: parse
+        env:
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          python3 - <<'PY'
+          import os, re, csv, datetime, pathlib
+          body = os.environ["BODY"]
+          def field(name):
+              m = re.search(r"### " + re.escape(name) + r"[^\n]*\n+([^\n]+)", body)
+              return m.group(1).strip() if m else ""
+          d, p = field("Date"), field("AAA national average")
+          ok = re.fullmatch(r"\d{4}-\d{2}-\d{2}", d) and re.fullmatch(r"\d\.\d{3,4}", p)
+          msg = "ok"
+          if not ok:
+              msg = "Could not read a YYYY-MM-DD date and a price like 4.0203."
+          else:
+              day = datetime.date.fromisoformat(d); price = float(p)
+              if day > datetime.date.today() or day < datetime.date(2015, 6, 2) or not 1.0 < price < 10.0:
+                  msg = "Date or price is out of range."
+              else:
+                  f = pathlib.Path("data/manual_aaa.csv")
+                  rows = list(csv.reader(f.open()))
+                  if any(r[0] == d for r in rows[1:]):
+                      msg = f"{d} is already in the data; existing rows are not overwritten."
+                  else:
+                      rows = [rows[0]] + sorted(rows[1:] + [[d, p]])
+                      csv.writer(f.open("w", newline="")).writerows(rows)
+          pathlib.Path(os.environ["GITHUB_OUTPUT"]).open("a").write(f"msg={msg}\n")
+          PY
+      - name: Commit and reply
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MSG: ${{ steps.parse.outputs.msg }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          git config user.name "gaslab-bot"; git config user.email "gaslab-bot@users.noreply.github.com"
+          if [ "$MSG" = "ok" ]; then
+            git add data && git commit -qm "Add data point from issue #$NUM" && git pull --rebase -q && git push
+            gh issue comment "$NUM" --body "Added. The next daily update (or a manual run of the Daily GasLab update workflow) will use it."
+          else
+            gh issue comment "$NUM" --body "Not added: $MSG"
+          fi
+          gh issue close "$NUM"

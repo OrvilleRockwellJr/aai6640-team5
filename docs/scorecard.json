@@ -1,0 +1,17 @@
+{
+  "source": "Part4_Diagnostics.ipynb, daily model out-of-sample on settled Kalshi AAA contracts (Aug 20 to Oct 19 2026; 1,105 contracts on 61 settlement days). Update this file when Part 4 is re-run.",
+  "window": "Aug 20 - Oct 19, 2026",
+  "contracts": 1105,
+  "events": 61,
+  "rows": [
+    {"metric": "Accuracy (all strikes)", "model": 0.886, "market": 0.933, "note": "market better, 95% CI on difference -7.8 to -2.0 points"},
+    {"metric": "Accuracy (strikes within 1 cent of last price)", "model": 0.741, "market": 0.850, "note": "market better, CI -17.3 to -4.9 points"},
+    {"metric": "Brier score (lower is better)", "model": 0.0854, "market": 0.0489, "note": "market better, CI of model minus market +0.016 to +0.063"}
+  ],
+  "backtest": {
+    "rule": "buy at 9:00 a.m. when estimated edge after Kalshi fees exceeds 3 cents",
+    "model_only": {"trades": 208, "roi": -0.007},
+    "model_plus_market": {"trades": 86, "roi": -0.043}
+  },
+  "verdict": "The model is a usable probabilistic forecaster, but the Kalshi price was significantly more accurate over this window and the fee-aware backtest lost money. No tradable edge was found."
+}
