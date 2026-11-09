@@ -3,398 +3,340 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GasLab: U.S. gas price forecasts with confidence</title>
-<meta name="description" content="Free tool: forecasts the U.S. average gas price as a probability, with a calendar of past forecasts vs actual prices and predictions for the coming days.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2314305A%27/%3E%3Cpath d=%27M14 46 26 30l9 9 15-20%27 fill=%27none%27 stroke=%27%2339B3B9%27 stroke-width=%275%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap">
+<title>GasLab: ask a model about U.S. gas prices</title>
+<meta name="description" content="A forecasting model for the U.S. average gas price. Ask about a day or a price, or use the calendar to see past forecasts and predictions with confidence.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232E6F68'/%3E%3Cpath d='M14 44 26 30l9 8 15-18' fill='none' stroke='white' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
-:root{--ink:#1C2633;--muted:#5B6573;--faint:#66707D;--rule:#E2E6EB;--wash:#F4F6F9;--cv:#1F4E8C;--auto:#0F7A80;--bio:#B23A64;--navy:#14305A;--navy2:#0F2547;
---serif:"Source Serif 4",Georgia,serif;--sans:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif}
+:root{--bg:#FAF9F5;--panel:#fff;--line:#E6E3D8;--ink:#1F1E1D;--mut:#6B6860;--faint:#9A968A;--acc:#2E6F68;--accl:#E4F0EE;--amber:#F3E2BF;--rose:#F3D9DD;--blue:#3A66A8;
+--sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--serif:ui-serif,Georgia,"Times New Roman",serif}
 *{box-sizing:border-box}
-body{margin:0;background:#fff;color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased}
-a{color:var(--cv);text-underline-offset:3px}
-p{margin:0}
-.page{max-width:68rem;margin:0 auto;padding:0 24px}
-.mast{background:radial-gradient(120% 140% at 85% -10%,#1E4A85 0%,var(--navy) 45%,var(--navy2) 100%);color:#fff;position:relative}
-.mast::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:linear-gradient(90deg,#3E7BD0 0 33.3%,#1AA3AA 33.3% 66.6%,#D9568A 66.6%)}
-.mast a{color:#BFD5F7}
-.mast .page{padding-top:26px;padding-bottom:52px}
-.crumb{font-family:var(--sans);font-size:14.5px}
-.mast h1{font-size:clamp(2rem,4.6vw,2.9rem);line-height:1.08;margin:26px 0 12px;letter-spacing:-.015em}
-.mast .dek{font-size:1.15rem;color:#D4DEEC;max-width:46rem;line-height:1.6}
-.pill{display:inline-flex;gap:8px;align-items:center;font-family:var(--sans);font-size:13.5px;font-weight:500;padding:7px 13px;border-radius:999px;margin-top:22px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.3);color:#fff}
-.pill i{width:8px;height:8px;border-radius:50%;background:#F2B14C;display:inline-block}
-section{padding:44px 0 6px}
-h2{font-size:1.5rem;font-weight:600;color:var(--navy);margin:0 0 8px;letter-spacing:-.01em}
-h2::after{content:"";display:block;width:36px;height:3px;border-radius:2px;margin-top:8px;background:linear-gradient(90deg,var(--cv) 0 33.3%,var(--auto) 33.3% 66.6%,var(--bio) 66.6%)}
-.sub{font-family:var(--sans);font-size:14.5px;color:var(--muted);margin:14px 0 22px;max-width:44rem}
-.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
-.tile{border-top:3px solid var(--c);border-radius:0 0 6px 6px;padding:18px 18px 20px;box-shadow:0 1px 0 var(--rule),inset 0 0 0 1px var(--rule);background:linear-gradient(180deg,color-mix(in srgb,var(--c) 7%,#fff),#fff 75%)}
-.tile .k{font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
-.tile .v{font-size:2rem;font-weight:700;color:var(--navy);line-height:1.15;margin-top:6px;font-variant-numeric:tabular-nums}
-.tile .s{font-family:var(--sans);font-size:14px;color:var(--muted);margin-top:4px}
-.panel{box-shadow:0 1px 2px rgba(20,48,90,.07),inset 0 0 0 1px var(--rule);border-radius:8px;padding:26px;background:#fff}
-.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;font-family:var(--sans);font-size:15px;margin-bottom:6px}
-.ctl label{font-weight:500}
-.ctl input[type=range]{flex:1 1 260px;accent-color:var(--cv)}
-.ctl input[type=number]{width:7.2rem;font:inherit;padding:6px 8px;border:1px solid #C9D0D8;border-radius:5px}
-.answer{font-size:1.3rem;margin:6px 0 14px}
-.answer b{color:var(--navy)}
-.answer .pp{font-weight:700;font-size:1.7rem;color:var(--cv);font-variant-numeric:tabular-nums}
-svg text{font-family:var(--sans);font-size:12px;fill:var(--muted)}
-table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:14.5px}
-th,td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
-th:first-child,td:first-child{text-align:left}
-th{font-weight:600;color:var(--muted);font-size:12.5px;letter-spacing:.03em;text-transform:uppercase}
-tr.hi td{background:#EAF0F8}
-.bar{display:inline-block;height:9px;border-radius:2px;vertical-align:middle;margin-right:6px}
-.bar.m{background:var(--cv)}.bar.k{background:#C9D0D8}
-.tw{overflow-x:auto}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:26px}
-.score td.good{color:var(--auto);font-weight:600}.score td.bad{color:var(--bio);font-weight:600}
-.verdict{border-left:3px solid var(--bio);background:color-mix(in srgb,var(--bio) 5%,#fff);padding:12px 16px;margin-top:18px;border-radius:0 4px 4px 0;font-size:17px}
-.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
-.how div{border-left:3px solid var(--c);padding:2px 0 2px 14px}
-.how b{display:block;color:var(--navy);margin-bottom:3px}
-.how p{font-size:16px;color:var(--muted)}
-.note{font-family:var(--sans);font-size:13.5px;color:var(--faint);margin-top:12px}
-footer{margin-top:56px;background:var(--navy2);color:#A9BDD9;font-family:var(--sans);font-size:13.5px}
-footer .page{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:24px;padding-bottom:30px}
-footer a{color:#BFD5F7}
-.cal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;font-family:var(--sans)}
-.cal-head b{font-size:1.1rem;color:var(--navy);min-width:9.5rem;text-align:center}
-.cal-head button,.act button,.act a.btn{font:inherit;font-family:var(--sans);font-size:14px;font-weight:500;padding:7px 14px;border:1px solid #C9D0D8;border-radius:6px;background:#fff;color:var(--navy);cursor:pointer;text-decoration:none;display:inline-block}
-.cal-head button:hover:not(:disabled),.act button:hover,.act a.btn:hover{background:var(--wash)}
-.cal-head button:disabled{opacity:.4;cursor:default}
-.act a.btn.pri{background:var(--cv);border-color:var(--cv);color:#fff}
-.act a.btn.pri:hover{background:var(--navy)}
-.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;font-family:var(--sans)}
-.cal .dow{font-size:12px;font-weight:600;color:var(--muted);text-align:center;letter-spacing:.04em;text-transform:uppercase;padding-bottom:2px}
-.cal .day{min-height:62px;border-radius:6px;border:1px solid var(--rule);background:#fff;padding:5px 7px;text-align:left;font:inherit;font-family:var(--sans);color:var(--ink);display:flex;flex-direction:column;justify-content:space-between}
-.cal .day .n{font-size:12px;color:var(--muted)}
-.cal .day .e{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
-.cal .day.none{background:var(--wash);color:#9AA3AD;border-color:transparent}
-button.day{cursor:pointer}
-button.day:hover{box-shadow:0 0 0 2px var(--cv)}
-button.day:focus-visible{outline:3px solid var(--cv);outline-offset:1px}
-.day.g{background:color-mix(in srgb,var(--auto) 14%,#fff);border-color:color-mix(in srgb,var(--auto) 45%,#fff)}
-.day.m{background:color-mix(in srgb,#F2B14C 24%,#fff);border-color:#E7C27C}
-.day.b{background:color-mix(in srgb,var(--bio) 13%,#fff);border-color:color-mix(in srgb,var(--bio) 40%,#fff)}
-.day.p{border:1.5px dashed var(--cv);background:color-mix(in srgb,var(--cv) 5%,#fff)}.day.p .e{font-weight:500;color:var(--cv);font-size:12.5px}
-.tag{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--cv);border:1px solid var(--cv);border-radius:4px;padding:1px 6px;vertical-align:2px}
-.day.sel{box-shadow:0 0 0 3px var(--navy)}
-.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:14px}
-.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px;border:1px solid var(--rule)}
-.detail{margin-top:20px;border-top:1px solid var(--rule);padding-top:18px}
-.detail h3{margin:0 0 10px;font-size:1.15rem;color:var(--navy)}
-.detail .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px 22px}
-.detail .grid div{font-family:var(--sans)}
-.detail .grid span{display:block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
-.detail .grid b{font-size:1.35rem;color:var(--navy);font-variant-numeric:tabular-nums}
-.detail .grid small{display:block;color:var(--muted);font-size:13px}
-.msum{display:flex;flex-wrap:wrap;gap:8px 26px;font-family:var(--sans);font-size:14px;color:var(--muted);margin:0 0 16px}
-.msum b{color:var(--navy)}
-.act{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px}
-.live{list-style:none;padding:0;margin:0;font-family:var(--sans);font-size:14.5px;color:var(--muted)}
-.live li{padding:4px 0}.live b{color:var(--navy)}
-@media (max-width:900px){.detail .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:520px){.cal{gap:3px}.cal .day{min-height:50px;padding:4px}.cal .day .e{font-size:11px}}
-@media (max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}.how{grid-template-columns:1fr}}
-@media (max-width:480px){.tiles{grid-template-columns:1fr}.panel{padding:18px}}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--acc)}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;border-bottom:1px solid var(--line);background:var(--bg)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;letter-spacing:-.01em}
+.logo{width:28px;height:28px;border-radius:8px;background:var(--acc);display:grid;place-items:center}
+.logo svg{width:18px;height:18px}
+.hr{display:flex;align-items:center;gap:10px}
+.pill{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--mut);border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:4px 11px}
+.pill i{width:8px;height:8px;border-radius:50%;background:#3BA776;display:inline-block}
+.pill.stale i{background:#E0A030}
+.ibtn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:5px 11px;font-size:13.5px;color:var(--ink)}
+.ibtn:hover{background:#F2F0E7}
+main{flex:1;overflow-y:auto;scroll-behavior:smooth}
+.thread{max-width:46rem;margin:0 auto;padding:28px 18px 24px;display:flex;flex-direction:column;gap:22px}
+.msg{display:flex;gap:12px;align-items:flex-start}
+.av{flex:none;width:28px;height:28px;border-radius:8px;background:var(--acc);display:grid;place-items:center;margin-top:2px}
+.av svg{width:17px;height:17px}
+.body{min-width:0;flex:1}
+.txt{font-family:var(--serif);font-size:17.5px;line-height:1.6}
+.txt p{margin:0 0 10px}
+.txt b{font-weight:600}
+.msg.user{justify-content:flex-end}
+.msg.user .bubble{background:#EFEDE3;border-radius:16px;padding:9px 15px;max-width:80%;font-size:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:10px;box-shadow:0 1px 2px rgba(40,35,20,.04)}
+.card h4{margin:0 0 2px;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--mut)}
+.big{font-size:2.5rem;font-weight:650;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
+.sub{font-size:14px;color:var(--mut)}
+.row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+.row div span{display:block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--mut)}
+.row div b{font-size:1.25rem;font-variant-numeric:tabular-nums}
+.row div small{display:block;color:var(--mut);font-size:12.5px;line-height:1.35}
+.meter{height:8px;border-radius:99px;background:#ECE9DD;overflow:hidden;margin-top:8px}
+.meter i{display:block;height:100%;background:var(--acc);border-radius:99px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:7px 14px;font-size:14px}
+.chip:hover{background:var(--accl);border-color:#BFD9D5}
+.note{font-size:13px;color:var(--mut);margin-top:12px;line-height:1.45}
+.tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--acc);background:var(--accl);border-radius:5px;padding:1px 7px;vertical-align:2px;margin-left:6px}
+.cal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cal-h b{font-size:15px}
+.cal-h button{border:1px solid var(--line);background:var(--panel);border-radius:8px;width:34px;height:30px}
+.cal-h button:disabled{opacity:.35;cursor:default}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cal .dow{font-size:11.5px;font-weight:600;color:var(--faint);text-align:center;text-transform:uppercase;letter-spacing:.04em}
+.cal .d{min-height:54px;border:1px solid var(--line);border-radius:9px;background:var(--panel);padding:4px 6px;text-align:left;display:flex;flex-direction:column;justify-content:space-between}
+.cal .d .n{font-size:11.5px;color:var(--faint)}
+.cal .d .e{font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.cal .none{background:#F4F2E9;border-color:transparent}
+button.d:hover{box-shadow:0 0 0 2px var(--acc)}
+button.d:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.d.g{background:var(--accl);border-color:#BFD9D5}.d.m{background:var(--amber);border-color:#E6CC93}.d.b{background:var(--rose);border-color:#E3B8BF}
+.d.f{border:1.5px dashed var(--blue);background:#F1F5FB}.d.f .e{color:var(--blue);font-weight:500}
+.d.today{box-shadow:0 0 0 2px #1F1E1D}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--mut);margin-top:10px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px;border:1px solid var(--line)}
+.wk{display:grid;grid-template-columns:5.2rem 1fr 4.4rem 3.6rem;gap:8px 10px;align-items:center;font-size:14px;margin-top:10px;font-variant-numeric:tabular-nums}
+.wk .bar{position:relative;height:10px;background:#ECE9DD;border-radius:99px}
+.wk .bar i{position:absolute;top:0;height:100%;background:#BFD9D5;border-radius:99px}
+.wk .bar u{position:absolute;top:-2px;width:3px;height:14px;background:var(--acc);border-radius:2px}
+.wk .hd{font-size:11.5px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.acts a,.acts button{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:8px 14px;font-size:14px;text-decoration:none;color:var(--ink)}
+.acts a.pri{background:var(--acc);border-color:var(--acc);color:#fff}
+.acts a:hover,.acts button:hover{background:#F2F0E7}.acts a.pri:hover{background:#245a54}
+svg text{font-family:var(--sans);font-size:11px;fill:var(--mut)}
+.dots span{display:inline-block;width:6px;height:6px;margin-right:4px;border-radius:50%;background:var(--faint);animation:b 1s infinite}
+.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,60%,100%{opacity:.3}30%{opacity:1}}
+footer{border-top:1px solid var(--line);background:var(--bg);padding:12px 18px 14px}
+.comp{max-width:46rem;margin:0 auto}
+form{display:flex;gap:8px;align-items:center;background:var(--panel);border:1px solid #D9D5C6;border-radius:16px;padding:8px 8px 8px 16px;box-shadow:0 2px 8px rgba(40,35,20,.06)}
+form:focus-within{border-color:var(--acc)}
+input[type=text]{flex:1;border:0;outline:0;font:inherit;font-size:16px;background:transparent;min-width:0;color:var(--ink)}
+form button{border:0;background:var(--acc);color:#fff;border-radius:10px;width:38px;height:36px;display:grid;place-items:center}
+form button:disabled{opacity:.4}
+.fine{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+dialog{border:1px solid var(--line);border-radius:14px;max-width:34rem;padding:22px;font-size:15px;line-height:1.55}
+dialog::backdrop{background:rgba(30,28,20,.35)}
+dialog h3{margin:0 0 8px}
+@media (max-width:560px){.row{grid-template-columns:1fr 1fr}.big{font-size:2.1rem}.wk{grid-template-columns:4.4rem 1fr 3.8rem 0}.wk .c{display:none}.cal .d{min-height:46px;padding:3px 4px}.cal .d .e{font-size:10.5px}.txt{font-size:16.5px}}
 </style>
 </head>
 <body>
-<div class="mast"><div class="page">
-  <h1>GasLab</h1>
-  <p class="dek">Forecasts the U.S. average gas price as a probability, not a single number. See how past forecasts compared with the real price, click ahead on the calendar for a prediction and how confident the model is, or ask it whether the price will end above any level you pick.</p>
-  <span class="pill" id="status"><i></i><span>Loading&hellip;</span></span>
-</div></div>
-
-<div class="page">
-<main>
-
-<section>
-  <h2>Tomorrow's forecast</h2>
-  <p class="sub" id="forecast-sub"></p>
-  <div class="tiles" id="tiles"></div>
-</section>
-
-<section>
-  <h2>Ask the model a question</h2>
-  <p class="sub">Pick a price. The model returns the probability that the AAA national average ends above it. This is the same calculation that prices each Kalshi gas contract.</p>
-  <div class="panel">
-    <div class="ctl">
-      <label for="k">Price threshold ($/gal)</label>
-      <input id="k" type="range" step="0.001" aria-label="Price threshold slider">
-      <input id="kn" type="number" step="0.001" aria-label="Price threshold value">
-    </div>
-    <p class="answer" id="answer"></p>
-    <svg id="chart" viewBox="0 0 900 310" role="img" aria-label="Forecast probability density with the chosen threshold" width="100%"></svg>
-    <p class="note">Shaded area is the probability above the threshold. The curve is a Student-t distribution (heavy tails), fitted by the model from recent prices, wholesale costs and volatility.</p>
+<header>
+  <div class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-9"/></svg></span>GasLab</div>
+  <div class="hr"><span class="pill" id="status"><i></i><span>Loading&hellip;</span></span><button class="ibtn" id="about" type="button">About</button></div>
+</header>
+<main id="main"><div class="thread" id="thread"></div></main>
+<footer>
+  <div class="comp">
+    <form id="form" autocomplete="off">
+      <input type="text" id="q" placeholder="Ask about a day or a price, e.g. &ldquo;Will it be above $4.00 on Friday?&rdquo;" aria-label="Ask GasLab">
+      <button type="submit" id="send" aria-label="Send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+    </form>
+    <p class="fine">A forecasting model, not a chatbot: it understands dates and prices. Not financial advice.</p>
   </div>
-</section>
-
-<section>
-  <h2>Past forecasts, day by day</h2>
-  <p class="sub">Past days show what the model predicted, what the price turned out to be, and how close it was; every one was forecast before its price was known. Dashed days are predictions: click one for the expected price, a likely range, and how confident the model is.</p>
-  <div class="panel">
-    <div class="cal-head">
-      <button id="cprev" type="button" aria-label="Previous month">&larr; Prev</button>
-      <b id="cmonth" aria-live="polite"></b>
-      <button id="cnext" type="button" aria-label="Next month">Next &rarr;</button>
-    </div>
-    <p class="msum" id="msum"></p>
-    <div class="cal" id="cal" role="group" aria-label="Calendar of forecasts"></div>
-    <div class="legend">
-      <span><i style="background:color-mix(in srgb,var(--auto) 14%,#fff)"></i>within 1&cent;</span>
-      <span><i style="background:color-mix(in srgb,#F2B14C 24%,#fff)"></i>1&ndash;2&cent; off</span>
-      <span><i style="background:color-mix(in srgb,var(--bio) 13%,#fff)"></i>more than 2&cent; off</span>
-      <span><i style="border:2px dashed var(--cv)"></i>prediction (click for confidence)</span>
-    </div>
-    <div class="detail" id="detail" aria-live="polite"></div>
-  </div>
-  <p class="note" id="calnote"></p>
-</section>
-
-<section>
-  <h2>How good is it? An honest scorecard</h2>
-  <p class="sub" id="score-sub"></p>
-  <div class="panel tw">
-    <table class="score" id="score"></table>
-    <div class="verdict" id="verdict"></div>
-  </div>
-</section>
-
-<section>
-  <h2>Keeping it current</h2>
-  <p class="sub">The page is static, so it cannot change itself. A scheduled job in the project repository does the updating and republishes these files.</p>
-  <div class="panel">
-    <ul class="live" id="live"></ul>
-    <div class="act">
-      <a class="btn pri" id="adddata" target="_blank" rel="noopener" href="https://github.com/OrvilleRockwellJr/aai6640-team5/issues/new?template=add-data.yml">Add a data point</a>
-      <a class="btn" target="_blank" rel="noopener" href="https://github.com/OrvilleRockwellJr/aai6640-team5/actions/workflows/daily-update.yml">Run the update now</a>
-      <a class="btn" target="_blank" rel="noopener" href="https://github.com/OrvilleRockwellJr/aai6640-team5/tree/orville/integrate-all-parts">View the code</a>
-    </div>
-    <p class="note">Every morning the job pulls new wholesale and crude prices from FRED and the AAA national average, scores yesterday's forecast, and locks in tomorrow's so it can never be edited afterwards. Every Sunday it refits the model on everything collected. &ldquo;Add a data point&rdquo; opens a short form on GitHub; entries from project members are added automatically, anyone else's wait for review. &ldquo;Run the update now&rdquo; needs a GitHub account with access to the project.</p>
-  </div>
-</section>
-
-<section>
-  <h2>How it works</h2>
-  <div class="how">
-    <div style="--c:var(--cv)"><b>1. Weekly model</b><p>Ten years of EIA retail and wholesale prices train an LSTM that forecasts next week's price change and its uncertainty.</p></div>
-    <div style="--c:var(--auto)"><b>2. Daily model</b><p>A second LSTM uses the weekly forecast, recent AAA changes, wholesale and crude moves, and a GARCH volatility estimate to forecast tomorrow's change.</p></div>
-    <div style="--c:var(--bio)"><b>3. Probabilities</b><p>The output is a Student-t distribution. Every threshold question, and every Kalshi strike, is read off its cumulative curve. Three seeds are averaged.</p></div>
-  </div>
-  <p class="note">Built by Applied Deep Learning team 5 (Northeastern, AAI 6640): Orville Rockwell Jr. (team lead), Yi-Ting Lin, Wenjun Chen and Yixin Tian. The scorecard comes from the team's Part 4 diagnostics.</p>
-</section>
-
-</main>
-</div>
-<footer><div class="page"><span>GasLab &middot; Applied Deep Learning (AAI 6640) team 5, Northeastern University &middot; Research tool, not financial advice.</span><span><a href="https://github.com/OrvilleRockwellJr/aai6640-team5">Source code</a> &middot; <span id="gen"></span></span></div></footer>
-
-<script>
-(function(){
-"use strict";
-function lgamma(x){var c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5],y=x,t=x+5.5;t-=(x+0.5)*Math.log(t);var s=1.000000000190015;for(var j=0;j<6;j++)s+=c[j]/++y;return -t+Math.log(2.5066282746310005*s/x);}
-function betacf(a,b,x){var MAXIT=200,EPS=3e-12,FPMIN=1e-300,qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;if(Math.abs(d)<FPMIN)d=FPMIN;d=1/d;var h=d;for(var m=1;m<=MAXIT;m++){var m2=2*m,aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;h*=d*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;var del=d*c;h*=del;if(Math.abs(del-1)<EPS)break;}return h;}
-function ibeta(x,a,b){if(x<=0)return 0;if(x>=1)return 1;var bt=Math.exp(lgamma(a+b)-lgamma(a)-lgamma(b)+a*Math.log(x)+b*Math.log(1-x));return x<(a+1)/(a+b+2)?bt*betacf(a,b,x)/a:1-bt*betacf(b,a,1-x)/b;}
-function normcdf(z){var t=1/(1+0.2316419*Math.abs(z)),d=0.3989423*Math.exp(-z*z/2),p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return z>0?1-p:p;}
-function cdf(z,nu){if(nu==null)return normcdf(z);var x=nu/(nu+z*z),ib=ibeta(x,nu/2,0.5);return z>0?1-0.5*ib:0.5*ib;}
-function pdf(z,nu){if(nu==null)return Math.exp(-z*z/2)/Math.sqrt(2*Math.PI);return Math.exp(lgamma((nu+1)/2)-lgamma(nu/2)-0.5*Math.log(nu*Math.PI)-(nu+1)/2*Math.log(1+z*z/nu));}
-window.__t={cdf:cdf,pdf:pdf};
-
-var $=function(id){return document.getElementById(id)};
-function usd(x,d){return "$"+x.toFixed(d==null?3:d)}
-function pc(x,d){return (100*x).toFixed(d==null?0:d)+"%"}
-function dstr(s){var d=new Date(s+"T12:00:00");return d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric",year:"numeric"})}
-
-fetch("forecast.json",{cache:"no-store"}).then(function(r){return r.json()}).then(init).catch(function(e){$("status").lastChild.textContent="Could not load forecast.json";console.error(e)});
-
-function init(D){
-  var A=D.last_aaa,mu=D.dist.mu_pct,sc=D.dist.scale_pct,nu=D.dist.df;
-  function z(p){return (100*Math.log(p/A)-mu)/sc}
-  function pAbove(p){return 1-cdf(z(p),nu)}
-  function dens(p){return pdf(z(p),nu)/sc*100/p}
-  function quant(q){var lo=A*0.9,hi=A*1.1;for(var i=0;i<80;i++){var m=(lo+hi)/2;(1-pAbove(m)<q)?lo=m:hi=m}return (lo+hi)/2}
-
-  var days=Math.round((Date.now()-new Date(D.target_date+"T00:00:00").getTime())/864e5);
-  $("status").lastChild.textContent = days>1
-    ? "Snapshot of the forecast for "+dstr(D.target_date)+" (data through "+dstr(D.last_aaa_date).replace(/, \d{4}/,"")+"). Not live."
-    : "Forecast for "+dstr(D.target_date)+" (data through "+dstr(D.last_aaa_date).replace(/, \d{4}/,"")+")";
-  $("forecast-sub").textContent="Last settled AAA national average on "+dstr(D.last_aaa_date)+": "+usd(A,4)+". Model trained through "+dstr(D.trained_through)+"."+(D.wholesale_stale_days>3?" Wholesale inputs were "+D.wholesale_stale_days+" days old, which the model flags as a limitation.":"");
-  var up=D.prob_up>0.5;
-  var tiles=[
-   ["Forecast",usd(D.forecast,4),(D.change_cents>=0?"+":"")+D.change_cents.toFixed(2)+" cents vs last","var(--cv)"],
-   ["80% interval",usd(D.interval80[0],3)+"–"+usd(D.interval80[1],3).slice(1),"95%: "+usd(D.interval95[0],3)+"–"+usd(D.interval95[1],3).slice(1),"var(--auto)"],
-   ["Direction",(up?"UP ":"DOWN ")+pc(Math.max(D.prob_up,D.prob_down)),"probability price "+(up?"rises":"falls")+" vs last","var(--bio)"],
-   ["Within half a cent",pc(D.within_half_cent),"chance of landing within ±0.5¢ of the forecast","var(--cv)"]];
-  $("tiles").innerHTML=tiles.map(function(t){return '<div class="tile" style="--c:'+t[3]+'"><div class="k">'+t[0]+'</div><div class="v">'+t[1]+'</div><div class="s">'+t[2]+'</div></div>'}).join("");
-
-  // interactive chart
-  var lo=quant(0.003),hi=quant(0.997),k=$("k"),kn=$("kn");
-  lo=Math.min(lo,A-0.01);hi=Math.max(hi,A+0.01);
-  k.min=kn.min=lo.toFixed(3);k.max=kn.max=hi.toFixed(3);
-  var start=Math.round(A*200)/200; k.value=kn.value=start.toFixed(3);
-  var W=900,H=310,L=44,R=30,T=44,B=44;
-  var N=240,xs=[],ys=[],ym=0;
-  for(var i=0;i<=N;i++){var p=lo+(hi-lo)*i/N;xs.push(p);var y=dens(p);ys.push(y);if(y>ym)ym=y}
-  function X(p){return L+(p-lo)/(hi-lo)*(W-L-R)}
-  function Y(d){return T+(1-d/ym)*(H-T-B)}
-  function draw(){
-    var kv=parseFloat(k.value),pa=pAbove(kv),s="";
-    var path="M"+xs.map(function(p,i){return X(p).toFixed(1)+","+Y(ys[i]).toFixed(1)}).join(" L");
-    var area="M"+X(Math.max(kv,lo)).toFixed(1)+","+Y(0)+" ";
-    xs.forEach(function(p,i){if(p>=kv)area+="L"+X(p).toFixed(1)+","+Y(ys[i]).toFixed(1)+" "});
-    area+="L"+X(hi).toFixed(1)+","+Y(0)+" Z";
-    s+='<line x1="'+L+'" y1="'+Y(0)+'" x2="'+(W-R)+'" y2="'+Y(0)+'" stroke="#C9D0D8"/>';
-    s+='<path d="'+area+'" fill="#1F4E8C" opacity=".22"/><path d="'+path+'" fill="none" stroke="#1F4E8C" stroke-width="2.2"/>';
-    s+='<line x1="'+X(A)+'" y1="'+T+'" x2="'+X(A)+'" y2="'+Y(0)+'" stroke="#66707D" stroke-dasharray="4 4"/><text x="'+(X(A)+6)+'" y="'+(T-8)+'">last '+usd(A,3)+'</text>';
-    s+='<line x1="'+X(D.forecast)+'" y1="'+T+'" x2="'+X(D.forecast)+'" y2="'+Y(0)+'" stroke="#0F7A80" stroke-dasharray="4 4"/><text x="'+(X(D.forecast)-6)+'" y="'+(T-8)+'" text-anchor="end" style="fill:#0F7A80">forecast '+usd(D.forecast,3)+'</text>';
-    s+='<line x1="'+X(kv)+'" y1="'+T+'" x2="'+X(kv)+'" y2="'+Y(0)+'" stroke="#B23A64" stroke-width="2.2"/>';
-    var ticks=5;for(var i=0;i<=ticks;i++){var p=lo+(hi-lo)*i/ticks;s+='<text x="'+X(p)+'" y="'+(H-22)+'" text-anchor="'+(i==0?'start':i==ticks?'end':'middle')+'">'+usd(p,2)+'</text>'}
-    s+='<text x="'+(W/2)+'" y="'+(H-4)+'" text-anchor="middle">AAA national average ($/gal) on '+dstr(D.target_date)+'</text>';
-    $("chart").innerHTML=s;
-    $("answer").innerHTML='Probability the price ends <b>above '+usd(kv,3)+'</b>: <span class="pp">'+(pa<0.001?"<0.1%":pa>0.999?">99.9%":(100*pa).toFixed(1)+"%")+'</span> &middot; at or below: '+(100*(1-pa)).toFixed(1)+'%';
-  }
-  k.addEventListener("input",function(){kn.value=(+k.value).toFixed(3);draw()});
-  kn.addEventListener("input",function(){var v=parseFloat(kn.value);if(isFinite(v)){v=Math.min(Math.max(v,lo),hi);k.value=v;draw()}});
-  draw();
-
-  // scorecard
-  var S=D.scorecard;
-  $("score-sub").textContent="Scored out of sample on settled Kalshi contracts, "+S.window+" ("+S.contracts.toLocaleString()+" contracts, "+S.events+" settlement days). Source: Part 4 notebook.";
-  var t='<tr><th>Measure</th><th>Model</th><th>Kalshi market</th><th style="text-align:left">Reading</th></tr>';
-  S.rows.forEach(function(r){var br=r.metric.indexOf("Brier")>=0,mb=br?r.model<r.market:r.model>r.market;
-    t+='<tr><td>'+r.metric+'</td><td class="'+(mb?'good':'bad')+'">'+(br?r.model.toFixed(4):pc(r.model,1))+'</td><td class="'+(mb?'bad':'good')+'">'+(br?r.market.toFixed(4):pc(r.market,1))+'</td><td style="text-align:left;color:var(--muted)">'+r.note+'</td></tr>'});
-  var b=S.backtest;
-  t+='<tr><td>Fee-aware backtest return<br><span style="color:var(--faint);font-size:12.5px">'+b.rule+'</span></td><td class="bad">'+(100*b.model_only.roi).toFixed(1)+'% ('+b.model_only.trades+' trades)</td><td>–</td><td style="text-align:left;color:var(--muted)">blended with the market: '+(100*b.model_plus_market.roi).toFixed(1)+'% ('+b.model_plus_market.trades+' trades)</td></tr>';
-  $("score").innerHTML=t;
-  $("verdict").textContent=S.verdict;
-  if($("repo"))$("repo").href=D.repo;
-  $("gen").textContent="Snapshot generated "+D.generated_utc+" UTC";
-}
-})();
-</script>
+</footer>
+<dialog id="dlg"><h3>About GasLab</h3>
+<p>GasLab forecasts the AAA national average price for regular gasoline. It is a GARCH&ndash;LSTM network that outputs a probability distribution for the next day, built by Applied Deep Learning team 5 (AAI 6640, Northeastern University).</p>
+<p>It predicts one day at a time. For later days it carries the drift forward with a fade and widens the range at the rate measured on held-out days, so confidence drops the further out you ask. Every past day in the calendar was forecast before its price was known.</p>
+<p><a href="https://github.com/OrvilleRockwellJr/aai6640-team5" target="_blank" rel="noopener">Source code</a> &middot; <span id="upd"></span></p>
+<form method="dialog" style="all:unset"><div class="acts"><button>Close</button></div></form></dialog>
 
 <script>
 (function(){
 "use strict";
 var $=function(id){return document.getElementById(id)};
 var MON=["January","February","March","April","May","June","July","August","September","October","November","December"];
+var MS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 var DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-var SRC={heldout:"Held-out day: the model was fitted only on data through June 30, 2026.",oos:"Out-of-sample day: the shipped model (trained through Nov 3), using only data from the day before.",live:"Live forecast: locked in before the price was published."};
-/* Future days. Day 1 is the model's own forecast. Later days keep the model's drift with a 0.7 daily fade (best of the
-   options tried on held-out days). SD is the measured spread of actual-vs-forecast, in percent, by days ahead (74-80 held-out
-   starting days each); beyond 7 days it is extrapolated at the last observed slope, so treat those as rough. */
-var SD=[0.281,0.582,0.860,1.141,1.396,1.602,1.783],FADE=0.7,MAXH=14;
-function sdPct(h){return h<=7?SD[h-1]:SD[6]+0.18*(h-7)}
+var WD=["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+var SD=[0.281,0.582,0.860,1.141,1.396,1.602,1.783],FADE=0.7,MAXH=14;   /* measured on held-out days; see About */
+var REPO="https://github.com/OrvilleRockwellJr/aai6640-team5";
+var SRC={heldout:"Held-out day: the model was fitted only on data through June 30, 2026.",oos:"Out-of-sample day: the shipped model, using only data from the day before.",live:"Live forecast: locked in before the price was published."};
+var AV='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-9"/></svg>';
 function ncdf(z){var t=1/(1+0.2316419*Math.abs(z)),d=0.3989423*Math.exp(-z*z/2),p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return z>0?1-p:p}
-function usd(x){return "$"+x.toFixed(3)}
+function usd(x,d){return "$"+x.toFixed(d==null?3:d)}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function ymd(y,m,d){return y+"-"+("0"+(m+1)).slice(-2)+"-"+("0"+d).slice(-2)}
-function dayNum(s){return Math.round(new Date(s+"T12:00:00").getTime()/864e5)}
-function longDate(s){return new Date(s+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"})}
-function errC(r){return r.actual==null?null:(r.actual-r.pred)*100}
-function dirOK(r){var a=r.actual-r.prev;if(r.actual==null||Math.abs(a)<1e-9)return null;return ((r.pred-r.prev)>0)===(a>0)}
-
-Promise.all([
-  fetch("history.json",{cache:"no-store"}).then(function(r){return r.json()}),
-  fetch("forecast.json",{cache:"no-store"}).then(function(r){return r.json()})
-]).then(function(a){start(a[0],a[1])}).catch(function(e){$("calnote").textContent="Could not load the forecast data.";console.error(e)});
-
-function start(H,F){
-  var by={},rows=H.days.slice();
-  rows.forEach(function(r){by[r.date]=r});
-  var lastD=dayNum(F.last_aaa_date),A=F.last_aaa,mu=F.dist.mu_pct;
-  function future(h){                       /* model view of the day h days after the last published price */
-    var drift=0,k;for(k=0;k<h;k++)drift+=mu*Math.pow(FADE,k);
-    var c=A*Math.exp(drift/100),s=sdPct(h)/100*A,z=1.2816,z95=1.96;
-    return {h:h,pred:c,lo80:c-z*s,hi80:c+z*s,lo95:c-z95*s,hi95:c+z95*s,pUp:1-ncdf((A-c)/s),within1:2*ncdf(0.01/s)-1,sd:s};
-  }
-  function fdate(h){var d=new Date((lastD+h)*864e5+12*36e5);return d.toISOString().slice(0,10)}
-  var firstF=fdate(1),lastF=fdate(MAXH);
-  var graded=rows.filter(function(r){return r.actual!=null});
-  var first=rows[0].date,sel=graded.length?graded[graded.length-1].date:firstF;
-  var cy=+firstF.slice(0,4),cm=+firstF.slice(5,7)-1;
-  function mk(y,m){return y*12+m}
-  var minK=mk(+first.slice(0,4),+first.slice(5,7)-1),maxK=mk(+lastF.slice(0,4),+lastF.slice(5,7)-1);
-
-  function hOf(ds){return dayNum(ds)-lastD}
-  function render(){
-    $("cmonth").textContent=MON[cm]+" "+cy;
-    $("cprev").disabled=mk(cy,cm)<=minK;$("cnext").disabled=mk(cy,cm)>=maxK;
-    var cal=$("cal");cal.innerHTML="";
-    DOW.forEach(function(d){var e=document.createElement("div");e.className="dow";e.textContent=d;cal.appendChild(e)});
-    var f=new Date(cy,cm,1).getDay(),n=new Date(cy,cm+1,0).getDate(),i,mrows=[];
-    for(i=0;i<f;i++)cal.appendChild(document.createElement("div"));
-    for(i=1;i<=n;i++){
-      var ds=ymd(cy,cm,i),r=by[ds],h=hOf(ds),el,e=r?errC(r):null,isF=h>=1&&h<=MAXH;
-      if(!(r&&r.actual!=null)&&!isF){
-        el=document.createElement("div");el.className="day none";el.innerHTML='<span class="n">'+i+'</span>';cal.appendChild(el);continue}
-      el=document.createElement("button");el.type="button";
-      if(r&&r.actual!=null){
-        mrows.push(r);
-        el.className="day "+(Math.abs(e)<=1?"g":Math.abs(e)<=2?"m":"b")+(ds===sel?" sel":"");
-        el.innerHTML='<span class="n">'+i+'</span><span class="e">'+Math.abs(e).toFixed(1)+'¢</span>';
-        el.setAttribute("aria-label",longDate(ds)+": forecast "+usd(r.pred)+", actual "+usd(r.actual)+", off by "+Math.abs(e).toFixed(1)+" cents");
-      }else{
-        var q=future(h);
-        el.className="day p"+(ds===sel?" sel":"");
-        el.innerHTML='<span class="n">'+i+'</span><span class="e">'+usd(q.pred)+'</span>';
-        el.setAttribute("aria-label",longDate(ds)+": predicted "+usd(q.pred)+", "+Math.round(q.within1*100)+" percent chance of landing within one cent");
-      }
-      el.addEventListener("click",(function(d){return function(){sel=d;render()}})(ds));
-      cal.appendChild(el);
-    }
-    summary(mrows);detail();
-  }
-  function summary(m){
-    var s=$("msum");
-    if(!m.length){s.innerHTML="Dashed days are predictions. Click one to see the forecast and how confident the model is.";return}
-    var mae=m.reduce(function(t,r){return t+Math.abs(errC(r))},0)/m.length;
-    var nv=m.reduce(function(t,r){return t+Math.abs((r.actual-r.prev)*100)},0)/m.length;
-    var hit=m.filter(function(r){return r.actual>=r.lo80&&r.actual<=r.hi80}).length;
-    var d=m.map(dirOK).filter(function(x){return x!==null}),dc=d.filter(Boolean).length;
-    s.innerHTML='<span><b>'+m.length+'</b> graded days</span><span>Average miss <b>'+mae.toFixed(2)+'¢</b> (guessing &ldquo;same as yesterday&rdquo;: '+nv.toFixed(2)+'¢)</span><span>Inside the model’s 80% range <b>'+hit+' of '+m.length+'</b></span><span>Right direction <b>'+dc+' of '+d.length+'</b></span>';
-  }
-  function detail(){
-    var d=$("detail"),r=by[sel],h=hOf(sel),hh;
-    if(r&&r.actual!=null){
-      var e=errC(r),acc=100*(1-Math.abs(r.actual-r.pred)/r.actual),dk=dirOK(r);
-      hh='<h3>'+esc(longDate(r.date))+'</h3><div class="grid">';
-      hh+='<div><span>Predicted price</span><b>'+usd(r.pred)+'</b><small>80% range '+usd(r.lo80)+' to '+usd(r.hi80)+'</small></div>';
-      hh+='<div><span>Actual price</span><b>'+usd(r.actual)+'</b><small>AAA national average, regular</small></div>';
-      hh+='<div><span>Miss</span><b>'+Math.abs(e).toFixed(2)+'¢</b><small>actual was '+(e>=0?"above":"below")+' the forecast</small></div>';
-      hh+='<div><span>Accuracy</span><b>'+acc.toFixed(2)+'%</b><small>100% minus the miss as a share of the price</small></div>';
-      hh+='<div><span>Day before</span><b>'+usd(r.prev)+'</b><small>&ldquo;same as yesterday&rdquo; missed by '+Math.abs((r.actual-r.prev)*100).toFixed(2)+'¢</small></div>';
-      hh+='<div><span>Direction</span><b>'+(dk===null?"Flat":dk?"Right":"Wrong")+'</b><small>model said '+(r.pred>=r.prev?"up":"down")+'; price went '+(r.actual>r.prev?"up":r.actual<r.prev?"down":"nowhere")+'</small></div>';
-      hh+='<div><span>Inside 80% range</span><b>'+(r.actual>=r.lo80&&r.actual<=r.hi80?"Yes":"No")+'</b><small>'+usd(r.lo80)+' to '+usd(r.hi80)+'</small></div>';
-      hh+='<div><span>Inside 95% range</span><b>'+(r.actual>=r.lo95&&r.actual<=r.hi95?"Yes":"No")+'</b><small>'+usd(r.lo95)+' to '+usd(r.hi95)+'</small></div>';
-      hh+='</div><p class="note">'+esc(SRC[r.source]||"")+'</p>';
-    }else if(h>=1&&h<=MAXH){
-      var q=future(h),ch=100*(q.pred-A)/A;
-      hh='<h3>'+esc(longDate(sel))+' <span class="tag">prediction</span></h3><div class="grid">';
-      hh+='<div><span>Predicted price</span><b>'+usd(q.pred)+'</b><small>'+(q.pred>=A?"+":"")+((q.pred-A)*100).toFixed(1)+'¢ vs. the last published price ('+usd(A)+')</small></div>';
-      hh+='<div><span>Likely range (80%)</span><b>'+usd(q.lo80)+' – '+usd(q.hi80).slice(1)+'</b><small>95%: '+usd(q.lo95)+' – '+usd(q.hi95).slice(1)+'</small></div>';
-      hh+='<div><span>Confidence</span><b>'+Math.round(q.within1*100)+'%</b><small>chance it lands within ±1¢ of the prediction</small></div>';
-      hh+='<div><span>Chance it is higher</span><b>'+Math.round(q.pUp*100)+'%</b><small>than '+usd(A)+' on '+esc(longDate(F.last_aaa_date).replace(/^\w+, /,""))+'</small></div>';
-      hh+='</div><p class="note">'+h+(h===1?' day':' days')+' ahead. '+(h===1?'This is the model’s own forecast, with a range measured on held-out days (the raw model was too narrow).':'The model forecasts one day at a time. For later days its drift is carried forward with a fade, and the range widens at the rate measured on held-out days'+(h>7?'; beyond 7 days the widening is extrapolated, so treat it as rough':'')+'. Confidence falls as the date gets further out.')+'</p>';
-    }else hh="";
-    d.innerHTML=hh;
-  }
-  $("cprev").onclick=function(){cm--;if(cm<0){cm=11;cy--}render()};
-  $("cnext").onclick=function(){cm++;if(cm>11){cm=0;cy++}render()};
-  var nh=rows.filter(function(r){return r.source==="heldout"}).length,no=rows.filter(function(r){return r.source==="oos"}).length,nl=rows.filter(function(r){return r.source==="live"&&r.actual!=null}).length;
-  $("calnote").textContent="Past days shown: "+nh+" held-out, "+no+" out-of-sample and "+nl+" live. Days the model trained on are left out on purpose, because a model always looks accurate on prices it has already seen. Accuracy is 100% minus the miss as a share of the price, so a few cents off always reads as 99%+; the cents miss and the comparison with \"same as yesterday\" are the honest measures.";
-  var L=[],liveRows=rows.filter(function(r){return r.source==="live"}),lg=liveRows.filter(function(r){return r.actual!=null});
-  L.push("Prices through <b>"+F.last_aaa_date+"</b>; model trained through <b>"+F.trained_through+"</b>.");
-  L.push("Live forecasts locked in so far: <b>"+liveRows.length+"</b>, of which <b>"+lg.length+"</b> already scored.");
-  var up=(H.meta&&H.meta.updated_utc)||F.generated_utc;
-  if(up)L.push("Last refreshed <b>"+up+" UTC</b>.");
-  $("live").innerHTML=L.map(function(x){return "<li>"+x+"</li>"}).join("");
-  render();
+function dn(s){return Math.round(new Date(s+"T12:00:00").getTime()/864e5)}
+function iso(n){return new Date(n*864e5+12*36e5).toISOString().slice(0,10)}
+function nice(s){var d=new Date(s+"T12:00:00");return DOW[d.getDay()]+", "+MS[d.getMonth()]+" "+d.getDate()}
+function long(s){return new Date(s+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"})}
+var H,F,by={},lastD,A,mu,todayN;
+function sdPct(h){return h<=7?SD[h-1]:SD[6]+0.18*(h-7)}
+function future(h){
+  var dr=0,k;for(k=0;k<h;k++)dr+=mu*Math.pow(FADE,k);
+  var c=A*Math.exp(dr/100),s=sdPct(h)/100*A;
+  return {h:h,pred:c,sd:s,lo80:c-1.2816*s,hi80:c+1.2816*s,lo95:c-1.96*s,hi95:c+1.96*s,pUp:1-ncdf((A-c)/s),within1:2*ncdf(0.01/s)-1};
 }
+function errC(r){return (r.actual-r.pred)*100}
+
+/* ---------- thread ---------- */
+var thread=$("thread"),main=$("main");
+function scroll(){main.scrollTop=main.scrollHeight}
+function userMsg(t){var d=document.createElement("div");d.className="msg user";d.innerHTML='<div class="bubble">'+esc(t)+'</div>';thread.appendChild(d);scroll()}
+function botMsg(html,chips,delay){
+  var d=document.createElement("div");d.className="msg";
+  d.innerHTML='<div class="av">'+AV+'</div><div class="body"><div class="dots"><span></span><span></span><span></span></div></div>';
+  thread.appendChild(d);scroll();
+  var body=d.querySelector(".body");
+  setTimeout(function(){
+    body.innerHTML=html+(chips?chipsHtml(chips):"");
+    wire(body);scroll();
+  },delay==null?350:delay);
+}
+function chipsHtml(list){return '<div class="chips">'+list.map(function(c){return '<button type="button" class="chip" data-q="'+esc(c)+'">'+esc(c)+'</button>'}).join("")+'</div>'}
+function wire(root){
+  root.querySelectorAll(".chip").forEach(function(b){b.onclick=function(){ask(b.getAttribute("data-q"))}});
+  root.querySelectorAll("[data-cal]").forEach(function(el){calendar(el)});
+}
+function ask(t){t=t.trim();if(!t)return;userMsg(t);answer(t)}
+
+/* ---------- cards ---------- */
+function bell(c,sd,a,b,marks){
+  var W=560,Hh=150,L=10,R=10,T=14,B=26,xl=c-4*sd,xh=c+4*sd,N=120,i,ym=1/(sd*Math.sqrt(2*Math.PI));
+  function X(v){return L+(v-xl)/(xh-xl)*(W-L-R)}function Y(d){return T+(1-d/ym)*(Hh-T-B)}
+  var path="",lo=Math.max(a,xl),hi=Math.min(b,xh),area="M"+X(lo).toFixed(1)+","+Y(0)+" ";
+  for(i=0;i<=N;i++){var v=xl+(xh-xl)*i/N,z=(v-c)/sd,d=Math.exp(-z*z/2)*ym;path+=(i?"L":"M")+X(v).toFixed(1)+","+Y(d).toFixed(1)+" ";
+    if(v>=lo&&v<=hi)area+="L"+X(v).toFixed(1)+","+Y(d).toFixed(1)+" "}
+  area+="L"+X(hi).toFixed(1)+","+Y(0)+"Z";
+  var s='<svg viewBox="0 0 '+W+' '+Hh+'" width="100%" role="img" aria-label="Probability curve for the price">';
+  s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(0)+'" y2="'+Y(0)+'" stroke="#D9D5C6"/><path d="'+area+'" fill="#2E6F68" opacity=".2"/><path d="'+path+'" fill="none" stroke="#2E6F68" stroke-width="2"/>';
+  marks.forEach(function(m){s+='<line x1="'+X(m.v)+'" x2="'+X(m.v)+'" y1="'+T+'" y2="'+Y(0)+'" stroke="'+m.c+'" stroke-width="'+(m.w||1.5)+'" '+(m.dash?'stroke-dasharray="4 3"':'')+'/><text x="'+X(m.v)+'" y="'+(m.dy||(T-3))+'" text-anchor="middle" style="fill:'+m.c+'">'+m.t+'</text>'});
+  for(i=0;i<5;i++){var tv=xl+(xh-xl)*(i+0.5)/5;s+='<text x="'+X(tv)+'" y="'+(Hh-8)+'" text-anchor="middle">'+usd(tv,2)+'</text>'}
+  return s+'</svg>';
+}
+function futureCard(ds){
+  var h=dn(ds)-lastD,q=future(h);
+  var html='<div class="txt"><p>My forecast for <b>'+nice(ds)+'</b> is <b>'+usd(q.pred)+'</b>.</p></div>';
+  html+='<div class="card"><h4>'+esc(long(ds))+'<span class="tag">prediction</span></h4><div class="big">'+usd(q.pred)+'</div>';
+  html+='<div class="sub">'+(q.pred>=A?"+":"")+((q.pred-A)*100).toFixed(1)+'¢ vs. the last published price ('+usd(A)+' on '+nice(F.last_aaa_date)+')</div>';
+  html+=bell(q.pred,q.sd,q.lo80,q.hi80,[{v:A,c:"#6B6860",t:"last "+usd(A,2),dash:1,dy:30},{v:q.pred,c:"#2E6F68",t:"forecast",w:2}]);
+  html+='<div class="row"><div><span>Likely range</span><b>'+usd(q.lo80,2)+' – '+usd(q.hi80,2).slice(1)+'</b><small>80% chance. 95%: '+usd(q.lo95,2)+' – '+usd(q.hi95,2).slice(1)+'</small></div>';
+  html+='<div><span>Confidence</span><b>'+Math.round(q.within1*100)+'%</b><small>chance it lands within ±1¢</small><div class="meter"><i style="width:'+Math.round(q.within1*100)+'%"></i></div></div>';
+  html+='<div><span>Chance it’s higher</span><b>'+Math.round(q.pUp*100)+'%</b><small>than '+usd(A)+'</small></div></div>';
+  html+='<p class="note">'+h+(h===1?' day':' days')+' ahead. '+(h===1?'This is the model’s own forecast, with a range measured on held-out days.':'The model forecasts one day at a time; later days carry its drift forward with a fade and a wider range'+(h>7?', and beyond 7 days the widening is extrapolated, so treat it as rough':'')+'. Confidence drops the further out you go.')+'</p></div>';
+  return html;
+}
+function pastCard(r){
+  var e=errC(r),acc=100*(1-Math.abs(r.actual-r.pred)/r.actual),dk=(r.actual-r.prev);
+  var dirok=Math.abs(dk)<1e-9?null:((r.pred-r.prev)>0)===(dk>0);
+  var in80=r.actual>=r.lo80&&r.actual<=r.hi80,in95=r.actual>=r.lo95&&r.actual<=r.hi95;
+  var html='<div class="txt"><p>For <b>'+nice(r.date)+'</b> I predicted <b>'+usd(r.pred)+'</b>; the price came in at <b>'+usd(r.actual)+'</b>, a miss of '+Math.abs(e).toFixed(1)+'¢.</p></div>';
+  html+='<div class="card"><h4>'+esc(long(r.date))+'</h4><div class="big">'+usd(r.actual)+'</div><div class="sub">actual AAA national average &middot; predicted '+usd(r.pred)+'</div>';
+  html+='<div class="row"><div><span>Miss</span><b>'+Math.abs(e).toFixed(2)+'¢</b><small>actual was '+(e>=0?"above":"below")+' the forecast</small></div>';
+  html+='<div><span>Accuracy</span><b>'+acc.toFixed(2)+'%</b><small>100% minus the miss as a share of the price</small></div>';
+  html+='<div><span>Direction</span><b>'+(dirok===null?"Flat":dirok?"Right":"Wrong")+'</b><small>model said '+(r.pred>=r.prev?"up":"down")+'; price went '+(dk>0?"up":dk<0?"down":"nowhere")+'</small></div>';
+  html+='<div><span>80% range</span><b>'+(in80?"Inside":"Outside")+'</b><small>'+usd(r.lo80)+' to '+usd(r.hi80)+'</small></div>';
+  html+='<div><span>95% range</span><b>'+(in95?"Inside":"Outside")+'</b><small>'+usd(r.lo95)+' to '+usd(r.hi95)+'</small></div>';
+  html+='<div><span>&ldquo;Same as yesterday&rdquo;</span><b>'+Math.abs((r.actual-r.prev)*100).toFixed(2)+'¢</b><small>miss from just repeating '+usd(r.prev)+'</small></div></div>';
+  html+='<p class="note">'+esc(SRC[r.source]||"")+'</p></div>';
+  return html;
+}
+function thresholdCard(k,ds,above){
+  var h=dn(ds)-lastD,q=future(h),p=1-ncdf((k-q.pred)/q.sd),pp=above?p:1-p;
+  var shown=pp<0.001?"<0.1%":pp>0.999?">99.9%":(100*pp).toFixed(1)+"%";
+  var html='<div class="txt"><p>I put the chance that the price is <b>'+(above?"above":"at or below")+' '+usd(k)+'</b> on <b>'+nice(ds)+'</b> at <b>'+(pp<0.01?"under 1%":pp>0.99?"over 99%":Math.round(100*pp)+"%")+'</b>.</p></div>';
+  html+='<div class="card"><h4>'+(above?"Above ":"At or below ")+usd(k)+' on '+esc(nice(ds))+'</h4><div class="big">'+shown+'</div><div class="sub">forecast '+usd(q.pred)+' &middot; 80% range '+usd(q.lo80,2)+' to '+usd(q.hi80,2)+'</div>';
+  html+=bell(q.pred,q.sd,above?k:-1e9,above?1e9:k,[{v:k,c:"#B23A64",t:usd(k,3),w:2.2,dy:11},{v:A,c:"#6B6860",t:"last",dash:1,dy:25}]);
+  html+='<p class="note">The shaded area is the chance the price ends '+(above?"above":"at or below")+' your line. Based on a normal curve around the forecast, with a spread measured on held-out days.</p></div>';
+  return html;
+}
+function weekCard(){
+  var rows=[],h,mn=1e9,mx=-1e9;
+  for(h=1;h<=7;h++){var q=future(h);rows.push(q);mn=Math.min(mn,q.lo80);mx=Math.max(mx,q.hi80)}
+  var pad=(mx-mn)*0.05;mn-=pad;mx+=pad;
+  function pc(v){return(100*(v-mn)/(mx-mn)).toFixed(1)}
+  var html='<div class="txt"><p>Here are the next 7 days. The model starts at <b>'+usd(rows[0].pred)+'</b> tomorrow and its range widens each day.</p></div><div class="card"><h4>Next 7 days</h4><div class="wk"><span class="hd">Day</span><span class="hd">80% range</span><span class="hd" style="text-align:right">Price</span><span class="hd c" style="text-align:right">Conf.</span>';
+  rows.forEach(function(q){var ds=iso(lastD+q.h);
+    html+='<span>'+nice(ds).replace(/,.*/,"")+' '+ds.slice(8).replace(/^0/,"")+'</span><span class="bar"><i style="left:'+pc(q.lo80)+'%;width:'+(pc(q.hi80)-pc(q.lo80)).toFixed(1)+'%"></i><u style="left:'+pc(q.pred)+'%"></u></span><b style="text-align:right">'+usd(q.pred,2)+'</b><span class="c" style="text-align:right;color:var(--mut)">'+Math.round(q.within1*100)+'%</span>'});
+  html+='</div><p class="note">Conf. is the chance of landing within ±1¢ of that day’s price. Click a day in the calendar for the full picture.</p></div>';
+  return html;
+}
+function accuracyCard(){
+  var g=H.days.filter(function(r){return r.actual!=null}),n=g.length;
+  var mae=g.reduce(function(t,r){return t+Math.abs(errC(r))},0)/n,nv=g.reduce(function(t,r){return t+Math.abs((r.actual-r.prev)*100)},0)/n;
+  var hit=g.filter(function(r){return r.actual>=r.lo80&&r.actual<=r.hi80}).length;
+  var d=g.filter(function(r){return Math.abs(r.actual-r.prev)>1e-9}),dc=d.filter(function(r){return((r.pred-r.prev)>0)===((r.actual-r.prev)>0)}).length;
+  var html='<div class="txt"><p>Over <b>'+n+'</b> days it had not seen, the average miss was <b>'+mae.toFixed(2)+'¢</b>, against <b>'+nv.toFixed(2)+'¢</b> for simply guessing &ldquo;same as yesterday.&rdquo;</p></div>';
+  html+='<div class="card"><h4>Track record</h4><div class="row"><div><span>Average miss</span><b>'+mae.toFixed(2)+'¢</b><small>vs '+nv.toFixed(2)+'¢ for the naive guess</small></div><div><span>Right direction</span><b>'+Math.round(100*dc/d.length)+'%</b><small>'+dc+' of '+d.length+' days that moved</small></div><div><span>Inside 80% range</span><b>'+Math.round(100*hit/n)+'%</b><small>aimed for 80%, so the raw ranges run narrow; the future-day ranges here are widened to match</small></div></div>';
+  if(F.scorecard&&F.scorecard.verdict)html+='<p class="note"><b>Against the Kalshi market:</b> '+esc(F.scorecard.verdict)+' ('+esc(F.scorecard.window)+')</p>';
+  html+='<p class="note">Only days the model was not trained on are counted.</p></div>';
+  return html;
+}
+function addCard(){
+  return '<div class="txt"><p>Prices come in automatically every morning from AAA and FRED. If a day was missed, you can add it. Entries from project members are added right away; anyone else’s are reviewed first.</p></div><div class="acts"><a class="pri" href="'+REPO+'/issues/new?template=add-data.yml" target="_blank" rel="noopener">Add a data point</a><a href="'+REPO+'/actions/workflows/daily-update.yml" target="_blank" rel="noopener">Run the update now</a></div><p class="note">Every Sunday the model is refit on everything collected. Both buttons open GitHub; running the update needs access to the project.</p>';
+}
+function helpHtml(){
+  return '<div class="txt"><p>I forecast the U.S. average gas price (AAA, regular). Try asking:</p><p>&bull; &ldquo;What’s the price on Friday?&rdquo; or &ldquo;Nov 15&rdquo;<br>&bull; &ldquo;Will it be above $3.95 tomorrow?&rdquo;<br>&bull; &ldquo;Next 7 days&rdquo; or &ldquo;How accurate are you?&rdquo;<br>&bull; Or open the calendar and tap any day.</p></div>';
+}
+
+/* ---------- calendar ---------- */
+function calendar(host){
+  var firstF=iso(lastD+1),lastF=iso(lastD+MAXH),first=H.days[0].date;
+  var cy=+firstF.slice(0,4),cm=+firstF.slice(5,7)-1;
+  function k(y,m){return y*12+m}
+  var minK=k(+first.slice(0,4),+first.slice(5,7)-1),maxK=k(+lastF.slice(0,4),+lastF.slice(5,7)-1);
+  host.innerHTML='<div class="cal-h"><button type="button" data-p aria-label="Previous month">&larr;</button><b data-m></b><button type="button" data-n aria-label="Next month">&rarr;</button></div><div class="cal" data-g></div><div class="legend"><span><i style="background:var(--accl)"></i>within 1¢</span><span><i style="background:var(--amber)"></i>1–2¢ off</span><span><i style="background:var(--rose)"></i>over 2¢ off</span><span><i style="border:1.5px dashed var(--blue);background:#F1F5FB"></i>prediction</span></div>';
+  var g=host.querySelector("[data-g]");
+  function draw(){
+    host.querySelector("[data-m]").textContent=MON[cm]+" "+cy;
+    host.querySelector("[data-p]").disabled=k(cy,cm)<=minK;host.querySelector("[data-n]").disabled=k(cy,cm)>=maxK;
+    g.innerHTML="";DOW.forEach(function(d){var e=document.createElement("div");e.className="dow";e.textContent=d;g.appendChild(e)});
+    var f=new Date(cy,cm,1).getDay(),n=new Date(cy,cm+1,0).getDate(),i;
+    for(i=0;i<f;i++)g.appendChild(document.createElement("div"));
+    for(i=1;i<=n;i++){
+      var ds=cy+"-"+("0"+(cm+1)).slice(-2)+"-"+("0"+i).slice(-2),r=by[ds],h=dn(ds)-lastD,el;
+      var past=r&&r.actual!=null,fut=h>=1&&h<=MAXH;
+      if(!past&&!fut){el=document.createElement("div");el.className="d none";el.innerHTML='<span class="n">'+i+'</span>';g.appendChild(el);continue}
+      el=document.createElement("button");el.type="button";
+      if(past){var e=Math.abs(errC(r));el.className="d "+(e<=1?"g":e<=2?"m":"b");el.innerHTML='<span class="n">'+i+'</span><span class="e">'+e.toFixed(1)+'¢</span>'}
+      else{var q=future(h);el.className="d f";el.innerHTML='<span class="n">'+i+'</span><span class="e">'+usd(q.pred,2)+'</span>'}
+      if(dn(ds)===todayN)el.className+=" today";
+      el.onclick=(function(d){return function(){ask("Show me "+nice(d))}})(ds);
+      g.appendChild(el);
+    }
+  }
+  host.querySelector("[data-p]").onclick=function(){cm--;if(cm<0){cm=11;cy--}draw()};
+  host.querySelector("[data-n]").onclick=function(){cm++;if(cm>11){cm=0;cy++}draw()};
+  draw();
+}
+function calCard(){return '<div class="txt"><p>Tap any day. Colored days are past forecasts (how far off I was); dashed days are predictions.</p></div><div class="card" data-cal></div>'}
+
+/* ---------- understanding the question ---------- */
+function parseDate(t){
+  var m,tn=todayN;
+  if(/\bday after tomorrow\b/.test(t))return iso(tn+2);
+  if(/\btomorrow\b/.test(t))return iso(tn+1);
+  if(/\btoday\b|\btonight\b|\bright now\b/.test(t))return iso(tn);
+  if(/\byesterday\b/.test(t))return iso(tn-1);
+  if((m=t.match(/\bin (\d{1,2}) days?\b/)))return iso(tn+ +m[1]);
+  if(/\bnext week\b/.test(t))return iso(tn+7);
+  var mon=null,day=null;
+  if((m=t.match(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+(\d{1,2})\b/))){mon=MS.map(function(x){return x.toLowerCase()}).indexOf(m[1]);day=+m[2]}
+  else if((m=t.match(/\b(\d{1,2})\/(\d{1,2})\b/))){mon=+m[1]-1;day=+m[2]}
+  if(mon!=null&&day>=1&&day<=31&&mon>=0&&mon<12){
+    var y=new Date(tn*864e5).getUTCFullYear(),c=y+"-"+("0"+(mon+1)).slice(-2)+"-"+("0"+day).slice(-2);
+    if(dn(c)<tn-200)c=(y+1)+c.slice(4);return c;
+  }
+  for(var i=0;i<7;i++)if(new RegExp("\\b"+WD[i]+"\\b|\\b"+WD[i].slice(0,3)+"\\b").test(t)){var cur=new Date(tn*864e5+12*36e5).getUTCDay();var add=(i-cur+7)%7;if(add===0)add=7;return iso(tn+add)}
+  return null;
+}
+function parsePrice(t){
+  var m=t.match(/\$\s*(\d{1,2}(?:\.\d{1,4})?)|\b(\d\.\d{1,4})\b|\b(?:above|over|below|under|exceed|hit|reach|than)\s+(\d{1,2}(?:\.\d{1,4})?)\b/);
+  if(!m)return null;var v=parseFloat(m[1]||m[2]||m[3]);return v>=1.5&&v<=9?v:null;
+}
+function answer(raw){
+  var t=raw.toLowerCase(),ds=parseDate(t),k=parsePrice(t),chips=["Open calendar","Next 7 days","How accurate are you?"];
+  if(/\b(help|what can you|how do (i|you)|what do you)\b/.test(t))return botMsg(helpHtml(),chips);
+  if(/\b(accura|how good|track record|score|reliable|trust)/.test(t))return botMsg(accuracyCard(),["Open calendar","Next 7 days"]);
+  if(/\b(add|submit|missing|update|refresh|retrain|new data)\b/.test(t)&&!ds&&!k)return botMsg(addCard(),["Open calendar","Tomorrow’s price"]);
+  if(/\bcalendar\b|\bpast forecasts?\b|\bhistory\b/.test(t))return botMsg(calCard(),["Next 7 days","How accurate are you?"]);
+  if(/\bnext (7|seven) days\b|\bnext week\b|\bthis week\b|\bweek ahead\b|\bforecast for the week\b/.test(t)&&!k)return botMsg(weekCard(),["Open calendar","How accurate are you?"]);
+  if(!ds&&k==null&&/\b(price|forecast|predict|cost|gas|going)\b/.test(t))ds=iso(lastD+1);
+  if(ds==null&&k!=null)ds=iso(lastD+1);
+  if(ds==null)return botMsg('<div class="txt"><p>I didn’t catch a date or a price in that. '+"I can answer things like “what’s the price on Friday?” or “will it be above $4 tomorrow?”.</p></div>",chips);
+  var n=dn(ds),h=n-lastD,r=by[ds];
+  if(h>MAXH)return botMsg('<div class="txt"><p>I forecast up to '+MAXH+' days past the last published price ('+nice(iso(lastD+MAXH))+'). Anything further out is mostly guesswork, so I won’t put a number on it.</p></div>',["Next 7 days","Open calendar"]);
+  if(h<=0){
+    if(r&&r.actual!=null){if(k!=null){var yes=r.actual>k;return botMsg('<div class="txt"><p>It already happened: the price on <b>'+nice(ds)+'</b> was <b>'+usd(r.actual)+'</b>, so it was '+(yes?"above":"not above")+' '+usd(k)+'.</p></div>',chips)}return botMsg(pastCard(r),["Open calendar","How accurate are you?"])}
+    return botMsg('<div class="txt"><p>I don’t have a stored forecast for '+nice(ds)+'. '+"I only grade days the model hadn’t seen, so earlier dates aren’t in the calendar.</p></div>",chips);
+  }
+  if(k!=null){var above=!/\b(below|under|less than|at or below|drop|fall)\b/.test(t);return botMsg(thresholdCard(k,ds,above),["Next 7 days","Open calendar"])}
+  botMsg(futureCard(ds),["Next 7 days","Open calendar","Will it be above "+usd(Math.round(future(h).pred*20)/20,2)+"?"]);
+}
+
+/* ---------- start ---------- */
+function start(){
+  var d=new Date();todayN=dn(d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2));
+  H.days.forEach(function(r){by[r.date]=r});
+  lastD=dn(F.last_aaa_date);A=F.last_aaa;mu=F.dist.mu_pct;
+  var stale=todayN-lastD>2;
+  $("status").className="pill"+(stale?" stale":"");
+  $("status").lastChild.textContent=stale?"Data through "+nice(F.last_aaa_date):"Live · data through "+nice(F.last_aaa_date);
+  var up=(H.meta&&H.meta.updated_utc)||F.generated_utc;$("upd").textContent="Last refreshed "+up+" UTC. Model trained through "+F.trained_through+".";
+  $("about").onclick=function(){$("dlg").showModal()};
+  var q1=future(1);
+  var hello='<div class="txt"><p>Hi, I’m GasLab. I forecast the U.S. average gas price as a probability, not a single number.</p><p>My forecast for <b>'+nice(iso(lastD+1))+'</b> is <b>'+usd(q1.pred)+'</b> ('+Math.round(q1.within1*100)+'% likely to land within a cent). Ask me about a day or a price, or tap a button.</p></div>';
+  botMsg(hello,["Tomorrow’s price","Next 7 days","Open calendar","Will it be above "+usd(Math.round(q1.pred*20)/20,2)+" tomorrow?","How accurate are you?","Add a data point"],200);
+  $("form").onsubmit=function(e){e.preventDefault();var v=$("q").value;$("q").value="";ask(v)};
+  $("q").focus();
+}
+Promise.all([fetch("history.json",{cache:"no-store"}).then(function(r){return r.json()}),fetch("forecast.json",{cache:"no-store"}).then(function(r){return r.json()})])
+ .then(function(a){H=a[0];F=a[1];start()})
+ .catch(function(e){$("status").lastChild.textContent="Could not load data";console.error(e)});
 })();
 </script>
 </body>
