@@ -1,138 +1,194 @@
 {
- "generated_utc": "2026-11-09 22:44",
+ "generated_utc": "2026-11-10 20:03",
  "model": "GARCH-LSTM-t (3-seed ensembles: weekly EIA retail model feeding a daily AAA model)",
- "target_date": "2026-11-10",
- "last_aaa_date": "2026-11-09",
- "last_aaa": 4.0093,
+ "target_date": "2026-11-11",
+ "last_aaa_date": "2026-11-10",
+ "last_aaa": 3.9788,
  "trained_through": "2026-11-03",
- "wholesale_stale_days": 5,
- "forecast": 3.990157197378886,
- "change_cents": -1.9142802621113564,
+ "wholesale_stale_days": 6,
+ "forecast": 3.9590614446575234,
+ "change_cents": -1.9738555342476705,
  "interval80": [
-  3.9787544571711466,
-  4.001592616779485
+  3.948436118430919,
+  3.9697153638647507
  ],
  "interval95": [
-  3.970496982374538,
-  4.009914761419321
+  3.941310343471329,
+  3.9768924942785953
  ],
- "prob_up": 0.027614640779579536,
- "prob_down": 0.9723853592204205,
- "within_half_cent": 0.45152668468813967,
+ "prob_up": 0.017292092423686234,
+ "prob_down": 0.9827079075763138,
+ "within_half_cent": 0.4727341894627822,
  "dist": {
-  "mu_pct": -0.47860345244407654,
-  "scale_pct": 0.19567987322807312,
-  "df": 5.324239253997803
+  "mu_pct": -0.4973278045654297,
+  "scale_pct": 0.1898205578327179,
+  "df": 6.960241794586182
  },
  "ladder": [
   {
-   "strike": 3.97,
-   "model_p": 0.9769,
+   "strike": 3.89,
+   "model_p": 0.9999,
+   "market_last": 0.0,
+   "volume": 0.0
+  },
+  {
+   "strike": 3.895,
+   "model_p": 0.9999,
+   "market_last": 0.0,
+   "volume": 0.0
+  },
+  {
+   "strike": 3.9,
+   "model_p": 0.9999,
+   "market_last": 0.0,
+   "volume": 0.0
+  },
+  {
+   "strike": 3.905,
+   "model_p": 0.9999,
+   "market_last": 0.0,
+   "volume": 0.0
+  },
+  {
+   "strike": 3.91,
+   "model_p": 0.9998,
+   "market_last": 0.0,
+   "volume": 0.0
+  },
+  {
+   "strike": 3.915,
+   "model_p": 0.9997,
+   "market_last": 0.0,
+   "volume": 0.0
+  },
+  {
+   "strike": 3.92,
+   "model_p": 0.9994,
+   "market_last": 0.0,
+   "volume": 0.0
+  },
+  {
+   "strike": 3.925,
+   "model_p": 0.9987,
+   "market_last": 0.99,
+   "volume": 150.27
+  },
+  {
+   "strike": 3.93,
+   "model_p": 0.9969,
    "market_last": 0.98,
-   "volume": 78133.56
+   "volume": 2598.01
+  },
+  {
+   "strike": 3.935,
+   "model_p": 0.9925,
+   "market_last": 0.98,
+   "volume": 21330.62
+  },
+  {
+   "strike": 3.94,
+   "model_p": 0.9806,
+   "market_last": 0.9,
+   "volume": 67082.78
+  },
+  {
+   "strike": 3.945,
+   "model_p": 0.9484,
+   "market_last": 0.07,
+   "volume": 40963.21
+  },
+  {
+   "strike": 3.95,
+   "model_p": 0.8666,
+   "market_last": 0.01,
+   "volume": 79806.95
+  },
+  {
+   "strike": 3.955,
+   "model_p": 0.6972,
+   "market_last": 0.02,
+   "volume": 72938.02
+  },
+  {
+   "strike": 3.96,
+   "model_p": 0.4521,
+   "market_last": 0.01,
+   "volume": 21891.75
+  },
+  {
+   "strike": 3.965,
+   "model_p": 0.2279,
+   "market_last": 0.02,
+   "volume": 6153.64
+  },
+  {
+   "strike": 3.97,
+   "model_p": 0.0948,
+   "market_last": 0.02,
+   "volume": 2514.69
   },
   {
    "strike": 3.975,
-   "model_p": 0.9471,
-   "market_last": 0.98,
-   "volume": 69914.19
+   "model_p": 0.0362,
+   "market_last": 0.01,
+   "volume": 1221.04
   },
   {
    "strike": 3.98,
-   "model_p": 0.8769,
-   "market_last": 0.15,
-   "volume": 64573.72
+   "model_p": 0.0138,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 3.985,
-   "model_p": 0.7319,
-   "market_last": 0.02,
-   "volume": 73512.98
+   "model_p": 0.0055,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 3.99,
-   "model_p": 0.5077,
-   "market_last": 0.01,
-   "volume": 45891.78
+   "model_p": 0.0023,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 3.995,
-   "model_p": 0.2805,
-   "market_last": 0.01,
-   "volume": 22643.47
+   "model_p": 0.001,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 4.0,
-   "model_p": 0.1302,
-   "market_last": 0.01,
-   "volume": 9367.91
+   "model_p": 0.0005,
+   "market_last": 0.02,
+   "volume": 3046.85
   },
   {
    "strike": 4.005,
-   "model_p": 0.0564,
-   "market_last": 0.02,
-   "volume": 2252.0
+   "model_p": 0.0003,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 4.01,
-   "model_p": 0.0247,
-   "market_last": 0.02,
-   "volume": 2011.69
+   "model_p": 0.0001,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 4.015,
-   "model_p": 0.0114,
-   "market_last": 0.01,
-   "volume": 2395.54
+   "model_p": 0.0001,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 4.02,
-   "model_p": 0.0056,
-   "market_last": 0.01,
-   "volume": 280.55
-  },
-  {
-   "strike": 4.025,
-   "model_p": 0.0029,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 4.03,
-   "model_p": 0.0016,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 4.035,
-   "model_p": 0.0009,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 4.04,
-   "model_p": 0.0006,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 4.045,
-   "model_p": 0.0004,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 4.05,
-   "model_p": 0.0002,
+   "model_p": 0.0001,
    "market_last": 0.0,
    "volume": 0.0
   }
  ],
  "history": [
-  {
-   "date": "2026-08-12",
-   "aaa": 4.036
-  },
   {
    "date": "2026-08-13",
    "aaa": 4.0715
@@ -488,6 +544,10 @@
   {
    "date": "2026-11-09",
    "aaa": 4.0093
+  },
+  {
+   "date": "2026-11-10",
+   "aaa": 3.9788
   }
  ],
  "scorecard": {
