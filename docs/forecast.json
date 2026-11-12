@@ -1,198 +1,158 @@
 {
- "generated_utc": "2026-11-11 19:53",
+ "generated_utc": "2026-11-12 20:29",
  "model": "GARCH-LSTM-t (3-seed ensembles: weekly EIA retail model feeding a daily AAA model)",
- "target_date": "2026-11-12",
- "last_aaa_date": "2026-11-11",
- "last_aaa": 3.9429,
+ "target_date": "2026-11-13",
+ "last_aaa_date": "2026-11-12",
+ "last_aaa": 3.9081,
  "trained_through": "2026-11-03",
- "wholesale_stale_days": 7,
- "forecast": 3.9212044037399494,
- "change_cents": -2.1695596260050465,
+ "wholesale_stale_days": 8,
+ "forecast": 3.8867114282881987,
+ "change_cents": -2.138857171180142,
  "interval80": [
-  3.910030908814093,
-  3.932409828589576
+  3.876059140947304,
+  3.89739299052441
  ],
  "interval95": [
-  3.902637996687177,
-  3.9398591386035875
+  3.869066806477477,
+  3.9044365172230147
  ],
- "prob_up": 0.01414610069199329,
- "prob_down": 0.9858538993080067,
- "within_half_cent": 0.45168219523295344,
+ "prob_up": 0.012068973799914007,
+ "prob_down": 0.987931026200086,
+ "within_half_cent": 0.4698987215667393,
  "dist": {
-  "mu_pct": -0.5517640709877014,
-  "scale_pct": 0.2026922106742859,
-  "df": 7.357353210449219
+  "mu_pct": -0.5487913489341736,
+  "scale_pct": 0.19559957087039948,
+  "df": 7.6192946434021
  },
  "ladder": [
   {
-   "strike": 3.855,
-   "model_p": 0.9999,
+   "strike": 3.85,
+   "model_p": 0.9993,
    "market_last": 0.99,
-   "volume": 1.0
+   "volume": 936.19
+  },
+  {
+   "strike": 3.855,
+   "model_p": 0.9983,
+   "market_last": 0.99,
+   "volume": 389.09
   },
   {
    "strike": 3.86,
-   "model_p": 0.9999,
+   "model_p": 0.9958,
    "market_last": 0.99,
-   "volume": 1.0
+   "volume": 11631.79
   },
   {
    "strike": 3.865,
-   "model_p": 0.9999,
-   "market_last": 0.99,
-   "volume": 1.0
+   "model_p": 0.9889,
+   "market_last": 0.98,
+   "volume": 55882.53
   },
   {
    "strike": 3.87,
-   "model_p": 0.9999,
-   "market_last": 0.99,
-   "volume": 1.0
+   "model_p": 0.9698,
+   "market_last": 0.82,
+   "volume": 58724.55
   },
   {
    "strike": 3.875,
-   "model_p": 0.9997,
-   "market_last": 0.99,
-   "volume": 1.0
+   "model_p": 0.9183,
+   "market_last": 0.02,
+   "volume": 54604.29
   },
   {
    "strike": 3.88,
-   "model_p": 0.9995,
-   "market_last": 0.99,
-   "volume": 301.0
+   "model_p": 0.798,
+   "market_last": 0.01,
+   "volume": 17467.05
   },
   {
    "strike": 3.885,
-   "model_p": 0.9989,
-   "market_last": 0.99,
-   "volume": 1.0
+   "model_p": 0.5861,
+   "market_last": 0.02,
+   "volume": 4386.84
   },
   {
    "strike": 3.89,
-   "model_p": 0.9975,
-   "market_last": 0.99,
-   "volume": 301.0
+   "model_p": 0.3387,
+   "market_last": 0.01,
+   "volume": 6469.78
   },
   {
    "strike": 3.895,
-   "model_p": 0.994,
-   "market_last": 0.99,
-   "volume": 5952.0
+   "model_p": 0.1547,
+   "market_last": 0.01,
+   "volume": 45.78
   },
   {
    "strike": 3.9,
-   "model_p": 0.9848,
-   "market_last": 0.99,
-   "volume": 26488.03
+   "model_p": 0.0605,
+   "market_last": 0.01,
+   "volume": 1141.2
   },
   {
    "strike": 3.905,
-   "model_p": 0.9608,
-   "market_last": 0.95,
-   "volume": 71966.62
+   "model_p": 0.0223,
+   "market_last": 0.01,
+   "volume": 93.51
   },
   {
    "strike": 3.91,
-   "model_p": 0.9006,
-   "market_last": 0.09,
-   "volume": 69206.95
+   "model_p": 0.0083,
+   "market_last": 0.01,
+   "volume": 93.51
   },
   {
    "strike": 3.915,
-   "model_p": 0.7705,
-   "market_last": 0.02,
-   "volume": 33913.66
+   "model_p": 0.0033,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 3.92,
-   "model_p": 0.5582,
-   "market_last": 0.02,
-   "volume": 6437.39
-  },
-  {
-   "strike": 3.925,
-   "model_p": 0.3235,
-   "market_last": 0.01,
-   "volume": 4011.91
-  },
-  {
-   "strike": 3.93,
-   "model_p": 0.1519,
-   "market_last": 0.01,
-   "volume": 2356.32
-  },
-  {
-   "strike": 3.935,
-   "model_p": 0.0623,
-   "market_last": 0.01,
-   "volume": 1879.73
-  },
-  {
-   "strike": 3.94,
-   "model_p": 0.0243,
-   "market_last": 0.01,
-   "volume": 106.51
-  },
-  {
-   "strike": 3.945,
-   "model_p": 0.0096,
-   "market_last": 0.01,
-   "volume": 149.0
-  },
-  {
-   "strike": 3.95,
-   "model_p": 0.004,
-   "market_last": 0.01,
-   "volume": 1875.38
-  },
-  {
-   "strike": 3.955,
-   "model_p": 0.0017,
-   "market_last": 0.01,
-   "volume": 8.0
-  },
-  {
-   "strike": 3.96,
-   "model_p": 0.0008,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 3.965,
-   "model_p": 0.0004,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 3.97,
-   "model_p": 0.0002,
+   "model_p": 0.0014,
    "market_last": 0.01,
    "volume": 3.0
   },
   {
-   "strike": 3.975,
+   "strike": 3.925,
+   "model_p": 0.0006,
+   "market_last": 0.01,
+   "volume": 20.0
+  },
+  {
+   "strike": 3.93,
+   "model_p": 0.0003,
+   "market_last": 0.0,
+   "volume": 0.0
+  },
+  {
+   "strike": 3.935,
    "model_p": 0.0001,
    "market_last": 0.0,
    "volume": 0.0
   },
   {
-   "strike": 3.98,
-   "model_p": 0.0001,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 3.985,
+   "strike": 3.94,
    "model_p": 0.0001,
    "market_last": 0.01,
-   "volume": 78.55
+   "volume": 1.76
+  },
+  {
+   "strike": 3.945,
+   "model_p": 0.0001,
+   "market_last": 0.0,
+   "volume": 0.0
+  },
+  {
+   "strike": 3.95,
+   "model_p": 0.0001,
+   "market_last": 0.0,
+   "volume": 0.0
   }
  ],
  "history": [
-  {
-   "date": "2026-08-14",
-   "aaa": 4.0776
-  },
   {
    "date": "2026-08-15",
    "aaa": 4.0704
@@ -548,6 +508,10 @@
   {
    "date": "2026-11-11",
    "aaa": 3.9429
+  },
+  {
+   "date": "2026-11-12",
+   "aaa": 3.9081
   }
  ],
  "scorecard": {
