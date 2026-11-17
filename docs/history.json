@@ -3,7 +3,7 @@
   "about": "Every row is a forecast made before its actual was known. heldout = model fitted through Jun 30 2026; oos = shipped model, data available the day before; live = frozen by the daily update job.",
   "price": "AAA national average regular, $/gal",
   "repo": "https://github.com/OrvilleRockwellJr/aai6640-team5",
-  "updated_utc": "2026-11-16 22:33"
+  "updated_utc": "2026-11-17 21:22"
  },
  "days": [
   {
@@ -1338,6 +1338,21 @@
    "mu_pct": -0.55962,
    "scale_pct": 0.20071,
    "df": 5.6858,
+   "actual": 3.7818,
+   "source": "live"
+  },
+  {
+   "date": "2026-11-18",
+   "prev": 3.7818,
+   "pred": 3.7593,
+   "lo80": 3.7494,
+   "hi80": 3.7692,
+   "lo95": 3.7429,
+   "hi95": 3.7758,
+   "prob_up": 0.007,
+   "mu_pct": -0.59695,
+   "scale_pct": 0.18802,
+   "df": 7.6062,
    "actual": null,
    "source": "live"
   }
