@@ -1,138 +1,134 @@
 {
- "generated_utc": "2026-11-18 20:56",
+ "generated_utc": "2026-11-19 21:00",
  "model": "GARCH-LSTM-t (3-seed ensembles: weekly EIA retail model feeding a daily AAA model)",
- "target_date": "2026-11-19",
- "last_aaa_date": "2026-11-18",
- "last_aaa": 3.7502,
+ "target_date": "2026-11-20",
+ "last_aaa_date": "2026-11-19",
+ "last_aaa": 3.7212,
  "trained_through": "2026-11-03",
- "wholesale_stale_days": 0,
- "forecast": 3.7269843422972633,
- "change_cents": -2.3215657702736703,
+ "wholesale_stale_days": 1,
+ "forecast": 3.7002713973714574,
+ "change_cents": -2.092860262854268,
  "interval80": [
-  3.717051665715354,
-  3.736943560900364
+  3.690786704339601,
+  3.7097804644485004
  ],
  "interval95": [
-  3.7105879778129562,
-  3.7434531591179407
+  3.6845565744842554,
+  3.716053244784781
  ],
- "prob_up": 0.005897346743120702,
- "prob_down": 0.9941026532568793,
- "within_half_cent": 0.4976968676337219,
+ "prob_up": 0.007996136777227991,
+ "prob_down": 0.992003863222772,
+ "within_half_cent": 0.5178330519971175,
  "dist": {
-  "mu_pct": -0.6209752559661865,
-  "scale_pct": 0.19089314341545105,
-  "df": 7.926992893218994
+  "mu_pct": -0.5640029311180115,
+  "scale_pct": 0.18287810683250427,
+  "df": 7.601390838623047
  },
  "ladder": [
   {
-   "strike": 3.71,
-   "model_p": 0.978,
+   "strike": 3.68,
+   "model_p": 0.991,
    "market_last": 0.98,
-   "volume": 10756.55
+   "volume": 4663.79
+  },
+  {
+   "strike": 3.685,
+   "model_p": 0.9724,
+   "market_last": 0.97,
+   "volume": 23467.23
+  },
+  {
+   "strike": 3.69,
+   "model_p": 0.9155,
+   "market_last": 0.18,
+   "volume": 23285.31
+  },
+  {
+   "strike": 3.695,
+   "model_p": 0.7704,
+   "market_last": 0.02,
+   "volume": 55238.56
+  },
+  {
+   "strike": 3.7,
+   "model_p": 0.5155,
+   "market_last": 0.02,
+   "volume": 2877.1
+  },
+  {
+   "strike": 3.705,
+   "model_p": 0.2529,
+   "market_last": 0.01,
+   "volume": 4.0
+  },
+  {
+   "strike": 3.71,
+   "model_p": 0.0955,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 3.715,
-   "model_p": 0.9348,
-   "market_last": 0.98,
-   "volume": 67630.49
+   "model_p": 0.0317,
+   "market_last": 0.01,
+   "volume": 1000.0
   },
   {
    "strike": 3.72,
-   "model_p": 0.8226,
-   "market_last": 0.78,
-   "volume": 32689.85
+   "model_p": 0.0104,
+   "market_last": 0.01,
+   "volume": 1000.0
   },
   {
    "strike": 3.725,
-   "model_p": 0.6063,
-   "market_last": 0.03,
-   "volume": 95556.78
+   "model_p": 0.0036,
+   "market_last": 0.01,
+   "volume": 1000.0
   },
   {
    "strike": 3.73,
-   "model_p": 0.3415,
+   "model_p": 0.0013,
    "market_last": 0.01,
-   "volume": 4842.13
+   "volume": 1002.7
   },
   {
    "strike": 3.735,
-   "model_p": 0.1467,
-   "market_last": 0.02,
-   "volume": 4735.93
+   "model_p": 0.0005,
+   "market_last": 0.01,
+   "volume": 1000.0
   },
   {
    "strike": 3.74,
-   "model_p": 0.0528,
-   "market_last": 0.01,
-   "volume": 2747.53
+   "model_p": 0.0002,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 3.745,
-   "model_p": 0.0179,
+   "model_p": 0.0001,
    "market_last": 0.0,
    "volume": 0.0
   },
   {
    "strike": 3.75,
-   "model_p": 0.0061,
+   "model_p": 0.0001,
    "market_last": 0.01,
-   "volume": 935.19
+   "volume": 1000.0
   },
   {
    "strike": 3.755,
-   "model_p": 0.0022,
-   "market_last": 0.01,
-   "volume": 36.0
+   "model_p": 0.0001,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 3.76,
-   "model_p": 0.0009,
-   "market_last": 0.01,
-   "volume": 187.03
-  },
-  {
-   "strike": 3.765,
-   "model_p": 0.0004,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 3.77,
-   "model_p": 0.0002,
-   "market_last": 0.01,
-   "volume": 57.98
-  },
-  {
-   "strike": 3.775,
-   "model_p": 0.0001,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 3.78,
-   "model_p": 0.0001,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 3.785,
-   "model_p": 0.0001,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 3.79,
    "model_p": 0.0001,
    "market_last": 0.0,
    "volume": 0.0
   }
  ],
  "history": [
-  {
-   "date": "2026-08-21",
-   "aaa": 4.1092
-  },
   {
    "date": "2026-08-22",
    "aaa": 4.1024
@@ -488,6 +484,10 @@
   {
    "date": "2026-11-18",
    "aaa": 3.7502
+  },
+  {
+   "date": "2026-11-19",
+   "aaa": 3.7212
   }
  ],
  "scorecard": {
