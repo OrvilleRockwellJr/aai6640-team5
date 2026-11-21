@@ -40,9 +40,11 @@ def daily_contracts(series="KXAAAGASD"):
     k = k[k.series == series].copy()
     k["date"] = pd.to_datetime(k.exp, utc=True).dt.tz_convert("America/New_York").dt.normalize().dt.tz_localize(None)
     k["y"] = (k.result == "yes").astype(float).where(k.result.isin(["yes", "no"]))
-    book = DATA / "kalshi_open_book.csv"
-    if book.exists():
-        k = k.merge(pd.read_csv(book)[["ticker", "bid", "ask", "hours_after_open"]], on="ticker", how="left")
+    cols = ["ticker", "bid", "ask", "hours_after_open"]
+    books = [pd.read_csv(DATA / f)[cols] for f in ("kalshi_open_book.csv", "kalshi_holdout_book.csv") if (DATA / f).exists()]
+    if books:                                    # holdout book (tools/fetch_kalshi_history.py) only adds tickers the open book lacks
+        b = pd.concat(books, ignore_index=True).drop_duplicates("ticker", keep="first")
+        k = k.merge(b, on="ticker", how="left")
     return k
 
 

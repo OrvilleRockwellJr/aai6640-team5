@@ -1,6 +1,8 @@
 """Reproducible experiment suite used by the midterm notebook. Each function returns tables/figures."""
 import os, warnings, json
 os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "3"); warnings.filterwarnings("ignore")
+from datetime import datetime, timezone
+from pathlib import Path
 import numpy as np, pandas as pd, matplotlib
 import matplotlib.pyplot as plt
 from scipy import stats
@@ -9,6 +11,42 @@ from . import data as D, models as M, evaluate as E, pipeline as P
 SEEDS = range(3)
 VA = ("2026-07-01", "2026-08-19"); TE = ("2026-08-20", "2026-10-19")   # fixed end: last settled Kalshi contract, so new AAA days do not change the test set
 WVA = ("2023-01-01", "2024-12-31"); WTE = ("2025-01-01", "2027-12-31")
+
+# Daily evaluation windows, in order of how untouched they are:
+#   VA  Jul 1 - Aug 19 2026: validation, used for early stopping and model choice.
+#   TE  Aug 20 - Oct 19 2026: was the test set, but it has now been scored many times (Parts 2-4, revisions, the
+#       scorecard) and choices were made after looking at it. Treat TE as DEVELOPMENT data from now on: fine for
+#       comparing models, but its scores are no longer an unbiased estimate of out-of-sample skill.
+#   HO  Oct 20 - Nov 20 2026, minus Nov 4-7: the ONLY final test. Nov 4-7 are removed because they were already
+#       scored in tools/backtest_nov2026 (RESULTS.md, 2026-11-08). HO may be read only through holdout_index().
+HO = ("2026-10-20", "2026-11-20")
+HO_EXCLUDE = ("2026-11-04", "2026-11-07")                              # inclusive
+RESULTS = Path(__file__).resolve().parent.parent / "results"
+FROZEN = RESULTS / "FROZEN.json"                                       # written by hand once the final model is fixed
+HOLDOUT_LOG = RESULTS / "holdout_access.log"
+
+
+def holdout_index(idx=None, purpose=""):
+    """The settlement dates of the final holdout HO (minus HO_EXCLUDE), restricted to `idx` if given.
+
+    This is the lock on the holdout: ALL holdout scoring must get its dates from here, never from HO directly.
+    Every call appends a UTC timestamp (and whether access was granted) to results/holdout_access.log, and the
+    call raises unless results/FROZEN.json exists, so the holdout cannot be scored before the model is frozen.
+
+    Score the holdout only with the PIPELINE models (P.run_daily with the default D_SPLIT: trained through
+    2026-06-30, early stopping on VA), never with model/ or service.forecast(): model/ is retrained on all data
+    available (meta.json: trained through 2026-11-03), so it has seen part of HO.
+    """
+    RESULTS.mkdir(exist_ok=True)
+    ok = FROZEN.exists()
+    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    with open(HOLDOUT_LOG, "a", encoding="utf-8") as fh:
+        fh.write(f"{stamp}\t{'granted' if ok else 'REFUSED (no FROZEN.json)'}\t{purpose}\n")
+    if not ok:
+        raise PermissionError(f"Holdout is locked: {FROZEN} does not exist. Freeze the final model first.")
+    days = pd.date_range(*HO, freq="D")
+    days = days[(days < HO_EXCLUDE[0]) | (days > HO_EXCLUDE[1])]
+    return days if idx is None else pd.DatetimeIndex(idx)[pd.DatetimeIndex(idx).isin(days)]
 
 
 def _rows(res, df_y, rngs, contracts=None):

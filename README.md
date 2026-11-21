@@ -11,9 +11,15 @@ Team project: a GARCH-LSTM-t model for US retail gasoline prices (AAA daily and 
 | `Part3_Optimization_experiments_revised.ipynb` | Part 3: optimization experiments |
 | `Part4_Diagnostics_revised.ipynb` | Part 4: diagnostics and backtest |
 | `gaslab/` | Shared Python package (data, models, pipeline, evaluation, experiments, service) |
-| `data/` | Input data: `fred.csv`, `kalshi_markets.csv`, `kalshi_open_book.csv` |
+| `data/` | Input data: `fred.csv`, `kalshi_markets.csv`, `kalshi_open_book.csv`, `kalshi_holdout_book.csv` |
 | `model/` | Trained daily and weekly weights (3 seeds each), scalers and `meta.json` |
 | `results/` | Saved results from earlier parts (`.pkl`, `.json`) |
+
+## Final holdout
+
+The daily final test is the holdout `HO` in `gaslab/experiments.py`: Kalshi settlement days 2026-10-20 to 2026-11-20, minus 2026-11-04 to 2026-11-07 (already scored in `tools/backtest_nov2026`). The old test window `TE` (2026-08-20 to 2026-10-19) has been checked many times and is now development data.
+
+**All holdout scoring must go through `holdout_index()`.** It raises an error unless `results/FROZEN.json` exists and appends every call to `results/holdout_access.log` (committed). Score the holdout with the pipeline models (trained through 2026-06-30, early stopping on validation), never with `model/`, which was trained on data through 2026-11-03. The test mask in `pipeline.split_masks` stops at 2026-10-19, so it never includes holdout days. Holdout settlements and the 9 a.m. bid/ask come from `tools/fetch_kalshi_history.py`.
 
 ## Front end (web demo, calendar and dashboard)
 

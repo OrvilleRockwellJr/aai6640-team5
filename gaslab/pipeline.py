@@ -10,10 +10,15 @@ ECM_W = ["d_retail", "up_gulf", "dn_gulf", "d_nyh", "d_brent", "ect"]
 ECM_D = ["d_aaa", "d_aaa_l2", "d_gulf", "d_brent", "ect", "w_drift"]
 
 
+TEST_END = "2026-10-19"   # last day of experiments.TE; the final holdout (experiments.HO) starts the day after
+
+
 def split_masks(idx, s, start=None):
+    """Train / validation / test masks. The test mask is capped at TEST_END for every split (weekly and daily), so it
+    can never include holdout days by accident; holdout dates come only from experiments.holdout_index()."""
     idx = pd.DatetimeIndex(idx)
     tr = (idx <= s["train_end"]) & ((idx >= start) if start else True)
-    va = (idx > s["train_end"]) & (idx <= s["val_end"]); te = idx > s["val_end"]
+    va = (idx > s["train_end"]) & (idx <= s["val_end"]); te = (idx > s["val_end"]) & (idx <= TEST_END)
     return tr, va, te
 
 
