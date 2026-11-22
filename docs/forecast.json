@@ -1,138 +1,134 @@
 {
- "generated_utc": "2026-11-21 19:50",
+ "generated_utc": "2026-11-22 19:59",
  "model": "GARCH-LSTM-t (3-seed ensembles: weekly EIA retail model feeding a daily AAA model)",
- "target_date": "2026-11-22",
- "last_aaa_date": "2026-11-21",
- "last_aaa": 3.6594,
+ "target_date": "2026-11-23",
+ "last_aaa_date": "2026-11-22",
+ "last_aaa": 3.6448,
  "trained_through": "2026-11-03",
- "wholesale_stale_days": 3,
- "forecast": 3.642508039364907,
- "change_cents": -1.6891960635093017,
+ "wholesale_stale_days": 4,
+ "forecast": 3.6350304696308267,
+ "change_cents": -0.9769530369173385,
  "interval80": [
-  3.632009326143351,
-  3.653037100245131
+  3.625230928814991,
+  3.644856500069555
  ],
  "interval95": [
-  3.6248177621379196,
-  3.6602846508378906
+  3.6181454830205264,
+  3.651994254281218
  ],
- "prob_up": 0.02959999889624887,
- "prob_down": 0.9704000011037511,
- "within_half_cent": 0.4793237836610842,
+ "prob_up": 0.10110581054478096,
+ "prob_down": 0.898894189455219,
+ "within_half_cent": 0.5121313547939274,
  "dist": {
-  "mu_pct": -0.4626733362674713,
-  "scale_pct": 0.20205546915531158,
-  "df": 6.410075664520264
+  "mu_pct": -0.268400102853775,
+  "scale_pct": 0.1847149282693863,
+  "df": 5.351759433746338
  },
  "ladder": [
   {
+   "strike": 3.605,
+   "model_p": 0.9973,
+   "market_last": 0.0,
+   "volume": 0.0
+  },
+  {
+   "strike": 3.61,
+   "model_p": 0.9941,
+   "market_last": 0.0,
+   "volume": 0.0
+  },
+  {
+   "strike": 3.615,
+   "model_p": 0.986,
+   "market_last": 0.0,
+   "volume": 0.0
+  },
+  {
    "strike": 3.62,
-   "model_p": 0.9899,
-   "market_last": 0.99,
-   "volume": 10001.0
+   "model_p": 0.9643,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 3.625,
-   "model_p": 0.9741,
+   "model_p": 0.9044,
    "market_last": 0.99,
-   "volume": 1.0
+   "volume": 1826.84
   },
   {
    "strike": 3.63,
-   "model_p": 0.9318,
+   "model_p": 0.7575,
    "market_last": 0.99,
-   "volume": 2601.96
+   "volume": 32183.67
   },
   {
    "strike": 3.635,
-   "model_p": 0.8279,
-   "market_last": 0.99,
-   "volume": 4789.33
+   "model_p": 0.5017,
+   "market_last": 0.46,
+   "volume": 19597.6
   },
   {
    "strike": 3.64,
-   "model_p": 0.628,
-   "market_last": 0.98,
-   "volume": 51834.27
+   "model_p": 0.2453,
+   "market_last": 0.01,
+   "volume": 22529.99
   },
   {
    "strike": 3.645,
-   "model_p": 0.3729,
-   "market_last": 0.19,
-   "volume": 51646.49
+   "model_p": 0.0972,
+   "market_last": 0.01,
+   "volume": 1185.27
   },
   {
    "strike": 3.65,
-   "model_p": 0.173,
-   "market_last": 0.02,
-   "volume": 2907.26
+   "model_p": 0.0366,
+   "market_last": 0.01,
+   "volume": 10.0
   },
   {
    "strike": 3.655,
-   "model_p": 0.069,
-   "market_last": 0.01,
-   "volume": 6510.57
+   "model_p": 0.0144,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 3.66,
-   "model_p": 0.0264,
-   "market_last": 0.01,
-   "volume": 187.03
+   "model_p": 0.0062,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 3.665,
-   "model_p": 0.0104,
-   "market_last": 0.01,
-   "volume": 1023.37
+   "model_p": 0.0029,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 3.67,
-   "model_p": 0.0044,
-   "market_last": 0.01,
-   "volume": 1000.0
+   "model_p": 0.0014,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 3.675,
-   "model_p": 0.002,
-   "market_last": 0.01,
-   "volume": 1030.0
+   "model_p": 0.0008,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 3.68,
-   "model_p": 0.0009,
-   "market_last": 0.01,
-   "volume": 19.0
+   "model_p": 0.0004,
+   "market_last": 0.0,
+   "volume": 0.0
   },
   {
    "strike": 3.685,
-   "model_p": 0.0005,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 3.69,
    "model_p": 0.0003,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 3.695,
-   "model_p": 0.0001,
-   "market_last": 0.0,
-   "volume": 0.0
-  },
-  {
-   "strike": 3.7,
-   "model_p": 0.0001,
    "market_last": 0.0,
    "volume": 0.0
   }
  ],
  "history": [
-  {
-   "date": "2026-08-24",
-   "aaa": 4.0991
-  },
   {
    "date": "2026-08-25",
    "aaa": 4.0969
@@ -488,6 +484,10 @@
   {
    "date": "2026-11-21",
    "aaa": 3.6594
+  },
+  {
+   "date": "2026-11-22",
+   "aaa": 3.6448
   }
  ],
  "scorecard": {
