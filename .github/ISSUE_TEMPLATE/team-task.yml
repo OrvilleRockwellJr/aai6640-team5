@@ -1,0 +1,45 @@
+name: Team task
+description: One task, one owner, one end goal. Assign it to a single person and add it to the project board.
+title: "[Task] "
+labels: ["task"]
+body:
+  - type: input
+    id: end-goal
+    attributes:
+      label: End goal
+      description: One sentence. What exists when this is done?
+      placeholder: "Notebook Stage 3 section runs top to bottom with the ablation table"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps
+      description: A short checklist. Each line should be something you can tick off.
+      placeholder: |
+        - [ ] Step one
+        - [ ] Step two
+    validations:
+      required: true
+  - type: input
+    id: team-deadline
+    attributes:
+      label: Team deadline
+      description: Our internal date, set two days before the course deadline.
+      placeholder: "2026-12-11"
+    validations:
+      required: true
+  - type: input
+    id: course-deadline
+    attributes:
+      label: Course deadline
+      placeholder: "2026-12-13"
+    validations:
+      required: true
+  - type: textarea
+    id: blockers
+    attributes:
+      label: Blockers or help needed
+      description: Optional. Say it here early, not at the deadline.
+    validations:
+      required: false
