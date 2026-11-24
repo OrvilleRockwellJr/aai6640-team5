@@ -1,0 +1,36 @@
+name: Create task issues
+on:
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create issues from the task plan
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh label create task --color 1d76db --description "Team task" 2>/dev/null || true
+          mk() {
+            gh issue create --label task --title "[Task] $1" --body "**Owner (proposed):** $2
+          **End goal:** $3
+          **Team deadline:** $4
+
+          **Steps**
+          - [ ] Start (move your card to In Progress)
+          - [ ] Do the work
+          - [ ] Teammate review
+          - [ ] Done
+
+          Details: see TASKS.md."
+          }
+          mk "Justify model complexity" "Yi-Ting" "Ablation results comparing GARCH-LSTM-t against Student-t LSTM, saved in results/ and written up in the notebook" "2026-12-04"
+          mk "Baseline comparison" "Wenjun" "ECM-GARCH-t and Student-t LSTM baselines evaluated on the same windows as the main model" "2026-12-04"
+          mk "Diagnostics" "Yixin" "Near-the-money and per-settlement-day tables and figures, final test window untouched" "2026-12-06"
+          mk "Notebook integration" "Orville" "One notebook that runs top to bottom, data and model code moved out of the giant setup cell" "2026-12-09"
+          mk "Ethics video" "Everyone" "One recorded team video with 3-4 credible sources and an individual reflection from each member" "2026-12-11"
+          mk "Demo video" "Everyone" "6-8 minute demo, every contributor speaking, camera on" "2026-12-14"
