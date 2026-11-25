@@ -7,8 +7,9 @@
 <meta name="description" content="A forecasting model for the U.S. average gas price. Ask about a day or a price, or use the calendar to see past forecasts and predictions with confidence.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232E6F68'/%3E%3Cpath d='M14 44 26 30l9 8 15-18' fill='none' stroke='white' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
-:root{--bg:#FAF9F5;--panel:#fff;--line:#E6E3D8;--ink:#1F1E1D;--mut:#6B6860;--faint:#9A968A;--acc:#2E6F68;--accl:#E4F0EE;--amber:#F3E2BF;--rose:#F3D9DD;--blue:#3A66A8;
+:root{color-scheme:light;--hov:#F2F0E7;--bub:#EFEDE3;--trk:#ECE9DD;--accb:#BFD9D5;--roseb:#E3B8BF;--ambb:#E6CC93;--fut:#F1F5FB;--nonebg:#F4F2E9;--side:#F4F2EA;--hov2:#EAE7DB;--cur:#E4E1D3;--line2:#D9D5C6;--line3:#CFCBB9;--acch:#245a54;--rose2:#B23A64;--scr:#B9B5A3;--scr2:#C9C5B3;--scr3:#A9A58F;--shadow:var(--shadow);--bg:#FAF9F5;--panel:#fff;--line:#E6E3D8;--ink:#1F1E1D;--mut:#6B6860;--faint:#9A968A;--acc:#2E6F68;--accl:#E4F0EE;--amber:#F3E2BF;--rose:#F3D9DD;--blue:#3A66A8;
 --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--serif:ui-serif,Georgia,"Times New Roman",serif}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#151716;--panel:#1E2120;--line:#2F3432;--ink:#ECEBE6;--mut:#A3A79F;--faint:#7E837B;--acc:#3FA699;--accl:#1C3431;--amber:#3A3220;--rose:#3B2429;--blue:#7FA8E6;--hov:#2A2E2C;--bub:#2A2E2C;--trk:#2F3432;--accb:#2E5A55;--roseb:#6B3A45;--ambb:#6B5A2E;--fut:#1B2433;--nonebg:#222625;--side:#101211;--hov2:#222625;--cur:#2A2E2C;--line2:#3A403D;--line3:#4A514E;--acch:#6CC9BC;--rose2:#E5718F;--scr:#4A514E;--scr2:#3F4542;--scr3:#5A625E;--shadow:rgba(0,0,0,.35)}
 *{box-sizing:border-box}
 html,body{height:100%}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -17,7 +18,7 @@ a{color:var(--acc)}
 .pill i{width:8px;height:8px;border-radius:50%;background:#3BA776;display:inline-block}
 .pill.stale i{background:#E0A030}
 .ibtn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:5px 11px;font-size:13.5px;color:var(--ink)}
-.ibtn:hover{background:#F2F0E7}
+.ibtn:hover{background:var(--hov)}
 .msg{display:flex;gap:12px;align-items:flex-start}
 .av{flex:none;width:28px;height:28px;border-radius:8px;background:var(--acc);display:grid;place-items:center;margin-top:2px}
 .av svg{width:17px;height:17px}
@@ -26,7 +27,7 @@ a{color:var(--acc)}
 .txt p{margin:0 0 10px}
 .txt b{font-weight:600}
 .msg.user{justify-content:flex-end}
-.msg.user .bubble{background:#EFEDE3;border-radius:16px;padding:9px 15px;max-width:80%;font-size:16px}
+.msg.user .bubble{background:var(--bub);border-radius:16px;padding:9px 15px;max-width:80%;font-size:16px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:10px;box-shadow:0 1px 2px rgba(40,35,20,.04)}
 .card h4{margin:0 0 2px;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--mut)}
 .big{font-size:2.5rem;font-weight:650;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
@@ -35,11 +36,11 @@ a{color:var(--acc)}
 .row div span{display:block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--mut)}
 .row div b{font-size:1.25rem;font-variant-numeric:tabular-nums}
 .row div small{display:block;color:var(--mut);font-size:12.5px;line-height:1.35}
-.meter{height:8px;border-radius:99px;background:#ECE9DD;overflow:hidden;margin-top:8px}
+.meter{height:8px;border-radius:99px;background:var(--trk);overflow:hidden;margin-top:8px}
 .meter i{display:block;height:100%;background:var(--acc);border-radius:99px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:7px 14px;font-size:14px}
-.chip:hover{background:var(--accl);border-color:#BFD9D5}
+.chip:hover{background:var(--accl);border-color:var(--accb)}
 .note{font-size:13px;color:var(--mut);margin-top:12px;line-height:1.45}
 .tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--acc);background:var(--accl);border-radius:5px;padding:1px 7px;vertical-align:2px;margin-left:6px}
 .cal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
@@ -51,28 +52,28 @@ a{color:var(--acc)}
 .cal .d{min-height:54px;border:1px solid var(--line);border-radius:9px;background:var(--panel);padding:4px 6px;text-align:left;display:flex;flex-direction:column;justify-content:space-between}
 .cal .d .n{font-size:11.5px;color:var(--faint)}
 .cal .d .e{font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums}
-.cal .none{background:#F4F2E9;border-color:transparent}
+.cal .none{background:var(--nonebg);border-color:transparent}
 button.d:hover{box-shadow:0 0 0 2px var(--acc)}
 button.d:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
-.d.g{background:var(--accl);border-color:#BFD9D5}.d.m{background:var(--amber);border-color:#E6CC93}.d.b{background:var(--rose);border-color:#E3B8BF}
-.d.f{border:1.5px dashed var(--blue);background:#F1F5FB}.d.f .e{color:var(--blue);font-weight:500}
-.d.today{box-shadow:0 0 0 2px #1F1E1D}
+.d.g{background:var(--accl);border-color:var(--accb)}.d.m{background:var(--amber);border-color:var(--ambb)}.d.b{background:var(--rose);border-color:var(--roseb)}
+.d.f{border:1.5px dashed var(--blue);background:var(--fut)}.d.f .e{color:var(--blue);font-weight:500}
+.d.today{box-shadow:0 0 0 2px var(--ink)}
 .legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--mut);margin-top:10px}
 .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px;border:1px solid var(--line)}
 .wk{display:grid;grid-template-columns:5.2rem 1fr 4.4rem 3.6rem;gap:8px 10px;align-items:center;font-size:14px;margin-top:10px;font-variant-numeric:tabular-nums}
-.wk .bar{position:relative;height:10px;background:#ECE9DD;border-radius:99px}
-.wk .bar i{position:absolute;top:0;height:100%;background:#BFD9D5;border-radius:99px}
+.wk .bar{position:relative;height:10px;background:var(--trk);border-radius:99px}
+.wk .bar i{position:absolute;top:0;height:100%;background:var(--accb);border-radius:99px}
 .wk .bar u{position:absolute;top:-2px;width:3px;height:14px;background:var(--acc);border-radius:2px}
 .wk .hd{font-size:11.5px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
 .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .acts a,.acts button{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:8px 14px;font-size:14px;text-decoration:none;color:var(--ink)}
 .acts a.pri{background:var(--acc);border-color:var(--acc);color:#fff}
-.acts a:hover,.acts button:hover{background:#F2F0E7}.acts a.pri:hover{background:#245a54}
+.acts a:hover,.acts button:hover{background:var(--hov)}.acts a.pri:hover{background:var(--acch)}
 svg text{font-family:var(--sans);font-size:11px;fill:var(--mut)}
 .dots span{display:inline-block;width:6px;height:6px;margin-right:4px;border-radius:50%;background:var(--faint);animation:b 1s infinite}
 .dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
 @keyframes b{0%,60%,100%{opacity:.3}30%{opacity:1}}
-form{display:flex;gap:8px;align-items:center;background:var(--panel);border:1px solid #D9D5C6;border-radius:16px;padding:8px 8px 8px 16px;box-shadow:0 2px 8px rgba(40,35,20,.06)}
+form{display:flex;gap:8px;align-items:center;background:var(--panel);border:1px solid var(--line2);border-radius:16px;padding:8px 8px 8px 16px;box-shadow:0 2px 8px var(--shadow)}
 form:focus-within{border-color:var(--acc)}
 input[type=text]{flex:1;border:0;outline:0;font:inherit;font-size:16px;background:transparent;min-width:0;color:var(--ink)}
 form button{border:0;background:var(--acc);color:#fff;border-radius:10px;width:38px;height:36px;display:grid;place-items:center}
@@ -85,16 +86,16 @@ dialog h3{margin:0 0 8px}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow:hidden}
 .app{display:grid;grid-template-rows:minmax(0,1fr);grid-template-columns:260px minmax(0,1fr) 370px;height:100vh;height:100dvh}
-.side{border-right:1px solid var(--line);background:#F4F2EA;padding:16px 14px;display:flex;flex-direction:column;gap:6px;overflow-y:auto}
+.side{border-right:1px solid var(--line);background:var(--side);padding:16px 14px;display:flex;flex-direction:column;gap:6px;overflow-y:auto}
 .brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px;letter-spacing:-.01em;padding:2px 4px 10px}
 .logo{width:28px;height:28px;border-radius:8px;background:var(--acc);display:grid;place-items:center;flex:none}
 .logo svg{width:18px;height:18px}
 .newchat{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:9px 12px;font-weight:500;margin-bottom:10px}
-.newchat:hover{background:#fff;border-color:#CFCBB9}
+.newchat:hover{background:var(--panel);border-color:var(--line3)}
 .side h5,.cpanel h5{margin:0 0 6px;font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
 .tools{display:flex;flex-direction:column;gap:2px}
 .tools button{border:0;background:transparent;text-align:left;padding:8px 10px;border-radius:8px;font-size:15px}
-.tools button:hover{background:#EAE7DB}
+.tools button:hover{background:var(--hov2)}
 .grow{flex:1}
 .model p{font-size:12.5px;color:var(--mut);margin:8px 2px 4px;line-height:1.45}
 .link{border:0;background:none;color:var(--acc);padding:2px;font-size:13.5px;text-decoration:underline;text-underline-offset:3px}
@@ -122,22 +123,24 @@ body.has .comp{flex:none;border-top:0;padding-bottom:12px}
 @media (max-width:1100px){.app{grid-template-columns:minmax(0,1fr)}.side,.cpanel{display:none}.topbar{display:flex}}
 @media (max-width:560px){.hero h1{font-size:1.5rem}}
 
-main{scrollbar-width:thin;scrollbar-color:#B9B5A3 transparent}
+main{scrollbar-width:thin;scrollbar-color:var(--scr) transparent}
 main::-webkit-scrollbar{width:12px}
-main::-webkit-scrollbar-thumb{background:#C9C5B3;border-radius:8px;border:3px solid var(--bg)}
-main::-webkit-scrollbar-thumb:hover{background:#A9A58F}
+main::-webkit-scrollbar-thumb{background:var(--scr2);border-radius:8px;border:3px solid var(--bg)}
+main::-webkit-scrollbar-thumb:hover{background:var(--scr3)}
 .jump{position:absolute;right:26px;bottom:118px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--panel);box-shadow:0 2px 8px rgba(0,0,0,.12);font-size:18px;display:none;place-items:center;z-index:5}
 .jump.on{display:grid}
 body:not(.has) .jump{display:none}
 .recent{margin-top:14px;min-height:0;overflow-y:auto}
 .recent .it{display:flex;align-items:center;gap:2px;border-radius:8px}
-.recent .it:hover{background:#EAE7DB}
+.recent .it:hover{background:var(--hov2)}
 .recent .it button.t{flex:1;min-width:0;text-align:left;border:0;background:none;padding:7px 10px;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.recent .it.cur{background:#E4E1D3}
+.recent .it.cur{background:var(--cur)}
 .recent .it button.x{border:0;background:none;color:var(--faint);padding:4px 8px;font-size:16px;visibility:hidden}
 .recent .it:hover button.x{visibility:visible}
+.theme{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:5px 11px;font-size:13.5px;color:var(--ink)}.theme:hover{background:var(--hov)}.theme svg{width:15px;height:15px}.side .theme{margin:6px 0 2px;width:100%;justify-content:center}
 .recent .none{font-size:13px;color:var(--faint);padding:2px 10px}
 </style>
+<script>(function(){var t="dark";try{var v=localStorage.getItem("juroom-theme");if(v==="light"||v==="dark")t=v}catch(e){}document.documentElement.setAttribute("data-theme",t)})();</script>
 </head>
 <body>
 <div class="app">
@@ -158,10 +161,11 @@ body:not(.has) .jump{display:none}
       <span class="pill" id="status"><i></i><span>Loading&hellip;</span></span>
       <p id="upd"></p>
       <button class="link" id="about" type="button">About this model</button>
+      <button class="theme" type="button" data-theme-toggle aria-label="Switch to light mode" title="Switch theme"><span class="ti"></span><span class="tl">Light mode</span></button>
     </div>
   </aside>
   <section class="chat" id="chat">
-    <div class="topbar"><div class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-9"/></svg></span>Juroom</div><div><button class="ibtn" data-q="Open calendar" type="button">Calendar</button> <button class="ibtn" id="newchat2" type="button">New</button></div></div>
+    <div class="topbar"><div class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-9"/></svg></span>Juroom</div><div><button class="ibtn" data-q="Open calendar" type="button">Calendar</button> <button class="ibtn" id="newchat2" type="button">New</button> <button class="theme" style="padding:4px 9px" type="button" data-theme-toggle aria-label="Switch to light mode" title="Switch theme"><span class="ti"></span><span class="tl">Light mode</span></button></div></div>
     <div class="hero" id="hero"><h1>What do you want to know about gas prices?</h1><p>Ask about a day or a price, or tap a date on the calendar.</p></div>
     <main id="main"><div class="thread" id="thread"></div></main>
     <button class="jump" id="jump" type="button" aria-label="Jump to latest">&darr;</button>
@@ -270,8 +274,8 @@ function bell(c,sd,a,b,marks){
     if(v>=lo&&v<=hi)area+="L"+X(v).toFixed(1)+","+Y(d).toFixed(1)+" "}
   area+="L"+X(hi).toFixed(1)+","+Y(0)+"Z";
   var s='<svg viewBox="0 0 '+W+' '+Hh+'" width="100%" role="img" aria-label="Probability curve for the price">';
-  s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(0)+'" y2="'+Y(0)+'" stroke="#D9D5C6"/><path d="'+area+'" fill="#2E6F68" opacity=".2"/><path d="'+path+'" fill="none" stroke="#2E6F68" stroke-width="2"/>';
-  marks.forEach(function(m){s+='<line x1="'+X(m.v)+'" x2="'+X(m.v)+'" y1="'+T+'" y2="'+Y(0)+'" stroke="'+m.c+'" stroke-width="'+(m.w||1.5)+'" '+(m.dash?'stroke-dasharray="4 3"':'')+'/><text x="'+X(m.v)+'" y="'+(m.dy||(T-3))+'" text-anchor="middle" style="fill:'+m.c+'">'+m.t+'</text>'});
+  s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(0)+'" y2="'+Y(0)+'" style="stroke:var(--line2)"/><path d="'+area+'" style="fill:var(--acc)" opacity=".2"/><path d="'+path+'" fill="none" style="stroke:var(--acc)" stroke-width="2"/>';
+  marks.forEach(function(m){s+='<line x1="'+X(m.v)+'" x2="'+X(m.v)+'" y1="'+T+'" y2="'+Y(0)+'" style="stroke:'+m.c+'" stroke-width="'+(m.w||1.5)+'" '+(m.dash?'stroke-dasharray="4 3"':'')+'/><text x="'+X(m.v)+'" y="'+(m.dy||(T-3))+'" text-anchor="middle" style="fill:'+m.c+'">'+m.t+'</text>'});
   for(i=0;i<5;i++){var tv=xl+(xh-xl)*(i+0.5)/5;s+='<text x="'+X(tv)+'" y="'+(Hh-8)+'" text-anchor="middle">'+usd(tv,2)+'</text>'}
   return s+'</svg>';
 }
@@ -280,7 +284,7 @@ function futureCard(ds){
   var html='<div class="txt"><p>My forecast for <b>'+nice(ds)+'</b> is <b>'+usd(q.pred)+'</b>.</p></div>';
   html+='<div class="card"><h4>'+esc(long(ds))+'<span class="tag">prediction</span></h4><div class="big">'+usd(q.pred)+'</div>';
   html+='<div class="sub">'+(q.pred>=A?"+":"")+((q.pred-A)*100).toFixed(1)+'¢ vs. the last published price ('+usd(A)+' on '+nice(F.last_aaa_date)+')</div>';
-  html+=bell(q.pred,q.sd,q.lo80,q.hi80,[{v:A,c:"#6B6860",t:"last "+usd(A,2),dash:1,dy:30},{v:q.pred,c:"#2E6F68",t:"forecast",w:2}]);
+  html+=bell(q.pred,q.sd,q.lo80,q.hi80,[{v:A,c:"var(--mut)",t:"last "+usd(A,2),dash:1,dy:30},{v:q.pred,c:"var(--acc)",t:"forecast",w:2}]);
   html+='<div class="row"><div><span>Likely range</span><b>'+usd(q.lo80,2)+' – '+usd(q.hi80,2).slice(1)+'</b><small>80% chance. 95%: '+usd(q.lo95,2)+' – '+usd(q.hi95,2).slice(1)+'</small></div>';
   html+='<div><span>Confidence</span><b>'+Math.round(q.within1*100)+'%</b><small>chance it lands within ±1¢</small><div class="meter"><i style="width:'+Math.round(q.within1*100)+'%"></i></div></div>';
   html+='<div><span>Chance it’s higher</span><b>'+Math.round(q.pUp*100)+'%</b><small>than '+usd(A)+'</small></div></div>';
@@ -307,7 +311,7 @@ function thresholdCard(k,ds,above){
   var shown=pp<0.001?"<0.1%":pp>0.999?">99.9%":(100*pp).toFixed(1)+"%";
   var html='<div class="txt"><p>I put the chance that the price is <b>'+(above?"above":"at or below")+' '+usd(k)+'</b> on <b>'+nice(ds)+'</b> at <b>'+(pp<0.01?"under 1%":pp>0.99?"over 99%":Math.round(100*pp)+"%")+'</b>.</p></div>';
   html+='<div class="card"><h4>'+(above?"Above ":"At or below ")+usd(k)+' on '+esc(nice(ds))+'</h4><div class="big">'+shown+'</div><div class="sub">forecast '+usd(q.pred)+' &middot; 80% range '+usd(q.lo80,2)+' to '+usd(q.hi80,2)+'</div>';
-  html+=bell(q.pred,q.sd,above?k:-1e9,above?1e9:k,[{v:k,c:"#B23A64",t:usd(k,3),w:2.2,dy:11},{v:A,c:"#6B6860",t:"last",dash:1,dy:25}]);
+  html+=bell(q.pred,q.sd,above?k:-1e9,above?1e9:k,[{v:k,c:"var(--rose2)",t:usd(k,3),w:2.2,dy:11},{v:A,c:"var(--mut)",t:"last",dash:1,dy:25}]);
   html+='<p class="note">The shaded area is the chance the price ends '+(above?"above":"at or below")+' your line. Based on a normal curve around the forecast, with a spread measured on held-out days.</p></div>';
   return html;
 }
@@ -346,7 +350,7 @@ function calendar(host){
   var cy=+firstF.slice(0,4),cm=+firstF.slice(5,7)-1;
   function k(y,m){return y*12+m}
   var minK=k(+first.slice(0,4),+first.slice(5,7)-1),maxK=k(+lastF.slice(0,4),+lastF.slice(5,7)-1);
-  host.innerHTML='<div class="cal-h"><button type="button" data-p aria-label="Previous month">&larr;</button><b data-m></b><button type="button" data-n aria-label="Next month">&rarr;</button></div><div class="cal" data-g></div><div class="legend"><span><i style="background:var(--accl)"></i>within 1¢</span><span><i style="background:var(--amber)"></i>1–2¢ off</span><span><i style="background:var(--rose)"></i>over 2¢ off</span><span><i style="border:1.5px dashed var(--blue);background:#F1F5FB"></i>prediction</span></div>';
+  host.innerHTML='<div class="cal-h"><button type="button" data-p aria-label="Previous month">&larr;</button><b data-m></b><button type="button" data-n aria-label="Next month">&rarr;</button></div><div class="cal" data-g></div><div class="legend"><span><i style="background:var(--accl)"></i>within 1¢</span><span><i style="background:var(--amber)"></i>1–2¢ off</span><span><i style="background:var(--rose)"></i>over 2¢ off</span><span><i style="border:1.5px dashed var(--blue);background:var(--fut)"></i>prediction</span></div>';
   var g=host.querySelector("[data-g]");
   function draw(){
     host.querySelector("[data-m]").textContent=MON[cm]+" "+cy;
@@ -439,6 +443,16 @@ function start(){
 Promise.all([fetch("history.json",{cache:"no-store"}).then(function(r){return r.json()}),fetch("forecast.json",{cache:"no-store"}).then(function(r){return r.json()})])
  .then(function(a){H=a[0];F=a[1];start()})
  .catch(function(e){$("status").lastChild.textContent="Could not load data";console.error(e)});
+})();
+
+(function(){
+var SUN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+var MOON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+function paint(){var d=document.documentElement.getAttribute("data-theme")==="dark";
+ [].forEach.call(document.querySelectorAll("[data-theme-toggle]"),function(b){b.querySelector(".ti").innerHTML=d?SUN:MOON;b.querySelector(".tl").textContent=d?"Light mode":"Dark mode";b.setAttribute("aria-label",d?"Switch to light mode":"Switch to dark mode")})}
+function set(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("juroom-theme",t)}catch(e){}paint()}
+[].forEach.call(document.querySelectorAll("[data-theme-toggle]"),function(b){b.addEventListener("click",function(){set(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark")})});
+paint();
 })();
 </script>
 </body>
